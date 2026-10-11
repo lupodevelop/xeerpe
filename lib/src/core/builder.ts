@@ -7,7 +7,8 @@ import {
     NoiseOptions,
     VignetteOptions,
     GrainOptions, BlurOptions, FilterType, FilterOptions, GlowOptions, PatternOptions, PatternType, DotsOptions,
-    GridOptions, StarsOptions, RaysOptions, AnimationOptions, AnimationType
+    GridOptions, StarsOptions, RaysOptions, AnimationOptions, AnimationType,
+    AnimationRange, ImageLayer, LayerAnimationSpec
 } from "../models/index.ts";
 import {
     buildGradientLayer,
@@ -27,17 +28,17 @@ import {
     RadialGradientOptions
 } from "../models/index.ts";
 
-interface LayerAnimationSpec {
-    size?: string
-    position?: { from: string, to: string }
-}
-
 const LAYER_ANIMATIONS: Partial<Record<AnimationType, LayerAnimationSpec>> = {
     breathe: { size: '200% 200%' },
     aurora: { size: '120% 120%' },
     liquid: { size: '200% 200%', position: { from: '0% 50%', to: '100% 50%' } },
     shimmer: { position: { from: '200% center', to: '-200% center' } },
     drift: { position: { from: '0% 0%', to: '100% 100%' } },
+}
+
+const SLIDING_GRADIENT_SIZES: Partial<Record<AnimationType, string>> = {
+    shimmer: '200% 100%',
+    drift: '300% 300%',
 }
 
 export class Builder {
@@ -190,6 +191,18 @@ export class Builder {
 
             if (backgroundImages.length) style.backgroundImage = backgroundImages.join(', ')
             if (backgroundSizes.length) style.backgroundSize = backgroundSizes.join(', ')
+
+            const slidingSize = this.slidingGradientSize()
+            const imageLayers = this.imageLayers(grouped)
+            const isUnsized = (size?: string) => !size || size === 'auto'
+
+            if (slidingSize && imageLayers.some(({type, size}) => type === 'gradient' && isUnsized(size))) {
+                style.backgroundSize = imageLayers
+                    .flatMap(({type, size, count}) =>
+                        Array<string>(count).fill(type === 'gradient' && isUnsized(size) ? slidingSize : size ?? 'auto'))
+                    .join(', ')
+            }
+
             if (backgroundColor) style.backgroundColor = backgroundColor
             if (boxShadows.length) style.boxShadow = boxShadows.join(', ')
         }
@@ -215,13 +228,8 @@ export class Builder {
         return style
     }
 
-    private layerAnimationVariables(grouped: Record<LayerType, CSSProperties[]>): Record<string, string> {
-        const scoped = this._layers.filter(layer =>
-            layer.animationType && LAYER_ANIMATIONS[layer.animationType] && layer.target !== 'all')
-
-        if (!scoped.length) return {}
-
-        const imageLayers = (['effect', 'pattern', 'gradient'] as const)
+    private imageLayers(grouped: Record<LayerType, CSSProperties[]>): ImageLayer[] {
+        return (['effect', 'pattern', 'gradient'] as const)
             .flatMap(type => grouped[type].map(properties => ({type, properties})))
             .map(({type, properties}) => ({
                 type,
@@ -231,6 +239,22 @@ export class Builder {
                     .reduce((total, image) => total + countTopLevelItems(image), 0),
             }))
             .filter(({count}) => count > 0)
+    }
+
+    private slidingGradientSize(): string | undefined {
+        return this._layers
+            .filter(layer => layer.animationType && SLIDING_GRADIENT_SIZES[layer.animationType] && layer.target !== 'patterns')
+            .map(layer => SLIDING_GRADIENT_SIZES[layer.animationType!])
+            .pop()
+    }
+
+    private layerAnimationVariables(grouped: Record<LayerType, CSSProperties[]>): Record<string, string> {
+        const scoped = this._layers.filter(layer =>
+            layer.animationType && LAYER_ANIMATIONS[layer.animationType] && layer.target !== 'all')
+
+        if (!scoped.length) return {}
+
+        const imageLayers = this.imageLayers(grouped)
 
         const variables: Record<string, string> = {}
 
@@ -241,7 +265,7 @@ export class Builder {
             const write = (
                 property: 'size' | 'position',
                 animatesLayer: (type: LayerType) => boolean,
-                animated: { from: string, to: string },
+                animated: AnimationRange,
                 resting: (size?: string) => string
             ) => {
                 if (imageLayers.every(({type}) => animatesLayer(type))) return

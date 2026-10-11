@@ -20,3 +20,19 @@ export interface BuilderLayer {
     animationType?: AnimationType
     target?: AnimationTarget
 }
+
+export interface AnimationRange {
+    from: string
+    to: string
+}
+
+export interface LayerAnimationSpec {
+    size?: string
+    position?: AnimationRange
+}
+
+export interface ImageLayer {
+    type: LayerType
+    size?: string
+    count: number
+}

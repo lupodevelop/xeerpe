@@ -339,7 +339,7 @@ Slides the background horizontally, from right to left, which produces a moving 
 
 For a clean loop, the gradient needs three things:
 
-- **A wider background:** set `backgroundSize` to something like `'200% 100%'`, otherwise there is nothing to slide.
+- **A wider background:** a gradient needs to be larger than the element, otherwise there is nothing to slide. When you do not set a `backgroundSize` on the gradient, `shimmer` widens it to `'200% 100%'` for you. Set your own value, such as `'400% 100%'`, to control how far the band travels.
 - **The same color at both ends**, because the background repeats and a different color would leave a visible seam.
 - **A horizontal direction** (`90deg`), so the band travels in the same direction as the animation.
 
@@ -511,7 +511,7 @@ new Builder()
 
 ## Drift
 
-Moves the background from the top left to the bottom right and back. Like `shimmer`, it needs a background larger than the element: use `backgroundSize` with a value such as `'300% 300%'`, so the movement reveals different parts of the gradient.
+Moves the background from the top left to the bottom right and back. Like `shimmer`, it needs a background larger than the element. When the gradient has no `backgroundSize`, `drift` widens it to `'300% 300%'` for you, so the movement reveals different parts of the gradient. Set your own `backgroundSize` to change it.
 
 ### Defaults
 

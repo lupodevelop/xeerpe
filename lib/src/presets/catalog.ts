@@ -29,6 +29,4 @@ export const presetCategories = {
     motion: Object.keys(motionPresets)
 }
 
-export type PresetCategory = keyof typeof presetCategories
-
 export const presetNames: string[] = Object.keys(xeerpePresets)
