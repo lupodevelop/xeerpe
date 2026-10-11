@@ -4,6 +4,19 @@ import {isHexColor, isValidColor, isValidPosition} from "../validations/index.ts
 export const clamp = (value: number, min: number, max: number): number =>
     Math.min(max, Math.max(min, value))
 
+export const countTopLevelItems = (value: string): number => {
+    let depth = 0
+    let count = 1
+
+    for (const char of value) {
+        if (char === '(') depth++
+        else if (char === ')') depth--
+        else if (char === ',' && depth === 0) count++
+    }
+
+    return count
+}
+
 export const hexToRgba = (hex: string): RgbaColor => {
     const trimmed = hex.trim()
     if (!isHexColor(trimmed)) throw new Error(`Invalid hex color: "${hex}"`)

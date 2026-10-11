@@ -61,9 +61,15 @@ export const buildAnimationByType = (type: AnimationType, options: AnimationOpti
 }
 
 export const buildAnimationLayer = (type: AnimationType, options: AnimationOptions): BuilderLayer => {
+    const { target = 'gradients' } = options
+
+    if (target !== 'gradients' && target !== 'patterns' && target !== 'all') {
+        throw new Error(`Invalid animation target: "${target}". Use "gradients", "patterns" or "all".`)
+    }
+
     const properties: CSSProperties = {
         animation: buildAnimationByType(type, options)
     }
 
-    return { type: 'animation', properties }
+    return { type: 'animation', properties, animationType: type, target }
 }

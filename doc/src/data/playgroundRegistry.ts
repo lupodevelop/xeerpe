@@ -26,6 +26,13 @@ const animation = (
     animates,
     fields: [
         {key: 'duration', label: 'Duration', kind: 'text', fallback: duration},
+        ...(animates.some((property) => property === 'background-size' || property === 'background-position') ? [{
+            key: 'target',
+            label: 'Applies to',
+            kind: 'select',
+            fallback: 'gradients',
+            options: animates.includes('background-position') ? ['gradients', 'patterns', 'all'] : ['gradients', 'all'],
+        } satisfies Field] : []),
         {key: 'easing', label: 'Easing', kind: 'text', fallback: easing, advanced: true},
         ...(direction ? [{
             key: 'direction',

@@ -51,7 +51,7 @@ All keyframes are prefixed with `xeerpe-`, so they never collide with your own a
 
 ## Shared options
 
-Every animation accepts the same four options. Each animation has its own defaults, listed in its section below.
+Every animation accepts the same four options, plus `target` on the five that move the background. Each animation has its own defaults, listed in its section below.
 
 <Prop name="duration" type="string">
 
@@ -77,7 +77,52 @@ Every animation accepts the same four options. Each animation has its own defaul
 
 </Prop>
 
-> **Note:** the values are inserted into the CSS as they are, without validation. If a value is not valid CSS, for example a duration without a unit, the browser ignores the whole `animation` declaration and nothing moves.
+<Prop name="target" type={["'gradients'", "'patterns'", "'all'"]}>
+
+    Which layers of the background the animation moves. `'gradients'` is the default: the gradients move and patterns and effects stay in place. `'patterns'` moves only the patterns, over a still gradient. `'all'` moves every layer. Only `breathe`, `aurora`, `liquid`, `shimmer` and `drift` use it, and `'patterns'` only has an effect on the ones that move the background (`shimmer`, `drift` and `liquid`). Any other value throws an error.
+
+</Prop>
+
+> **Note:** `pulse`, `rotate`, `float` and `plasma` have no `target`. They change a property of the whole element (`opacity`, `transform` or `filter`), which CSS cannot apply to one layer only, so they always affect everything.
+
+> **Note:** apart from `target`, the values are inserted into the CSS as they are, without validation. If a value is not valid CSS, for example a duration without a unit, the browser ignores the whole `animation` declaration and nothing moves.
+
+<table>
+  <thead>
+    <tr>
+      <th>Animation</th>
+      <th>What it changes</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>breathe</code>, <code>aurora</code></td>
+      <td>Background size, per layer</td>
+      <td><code>'gradients'</code> or <code>'all'</code></td>
+    </tr>
+    <tr>
+      <td><code>shimmer</code>, <code>drift</code>, <code>liquid</code></td>
+      <td>Background position, per layer</td>
+      <td><code>'gradients'</code>, <code>'patterns'</code> or <code>'all'</code></td>
+    </tr>
+    <tr>
+      <td><code>pulse</code></td>
+      <td>Opacity of the element</td>
+      <td>Not available</td>
+    </tr>
+    <tr>
+      <td><code>rotate</code>, <code>float</code></td>
+      <td>Transform of the element</td>
+      <td>Not available</td>
+    </tr>
+    <tr>
+      <td><code>plasma</code></td>
+      <td>Filter of the element</td>
+      <td>Not available</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Example
 
@@ -530,7 +575,7 @@ new Builder()
 ### Good to know
 
 - **Same property, last one wins.** Two animations that change the same property do not add up. `float` and `rotate` both animate `transform`, so with `.float().rotate()` the element only rotates, and with `.rotate().float()` it only floats.
-- **Background size is shared.** `breathe`, `aurora` and `liquid` set a single `background-size` for every layer of the element. Avoid them in chains with patterns or other layers that have their own `backgroundSize`, because those layers would be resized too.
+- **Only gradients move by default.** `breathe`, `aurora`, `liquid`, `shimmer` and `drift` change the size or the position of the background. The `target` option chooses which layers follow: `'gradients'` (the default) moves the gradients and keeps patterns and effects in place, `'patterns'` slides only the patterns over a still gradient (for the position animations `shimmer`, `drift` and `liquid`), and `'all'` moves every layer. For example, `.shimmer({ target: 'all' })` makes a grid slide together with the gradient. `toStyle()` writes a few `--xeerpe-*` custom properties for this, so use the style object it returns together with the xeerpe stylesheet, and update both when you upgrade.
 - **Filters are replaced.** `liquid` and `plasma` animate `filter`, which replaces any blur applied with `blur()` and `type: 'blur'` while they run.
 
 ---
@@ -572,5 +617,6 @@ interface AnimationOptions {
     | 'alternate'
     | 'alternate-reverse'
   iterationCount?: number | 'infinite'
+  target?: 'gradients' | 'patterns' | 'all'
 }
 ```

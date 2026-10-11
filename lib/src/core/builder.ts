@@ -17,6 +17,7 @@ import {
     buildAnimationLayer, generateLiquidAnimation, generatePlasmaAnimation, generateFloatAnimation,
     generateDriftAnimation
 } from "../generators/index.ts";
+import {countTopLevelItems} from "../utils/index.ts";
 import {
     ConicGradientOptions,
     GradientOptions,
@@ -25,6 +26,19 @@ import {
     MeshGradientOptions,
     RadialGradientOptions
 } from "../models/index.ts";
+
+interface LayerAnimationSpec {
+    size?: string
+    position?: { from: string, to: string }
+}
+
+const LAYER_ANIMATIONS: Partial<Record<AnimationType, LayerAnimationSpec>> = {
+    breathe: { size: '200% 200%' },
+    aurora: { size: '120% 120%' },
+    liquid: { size: '200% 200%', position: { from: '0% 50%', to: '100% 50%' } },
+    shimmer: { position: { from: '200% center', to: '-200% center' } },
+    drift: { position: { from: '0% 0%', to: '100% 100%' } },
+}
 
 export class Builder {
     private _layers: BuilderLayer[] = [];
@@ -192,11 +206,67 @@ export class Builder {
             const animations = grouped.animation.map(p => p.animation).filter(Boolean)
 
             if (animations.length) style.animation = animations.join(', ')
+
+            Object.assign(style, this.layerAnimationVariables(grouped))
         }
 
         style.backgroundPosition = 'center'
 
         return style
+    }
+
+    private layerAnimationVariables(grouped: Record<LayerType, CSSProperties[]>): Record<string, string> {
+        const scoped = this._layers.filter(layer =>
+            layer.animationType && LAYER_ANIMATIONS[layer.animationType] && layer.target !== 'all')
+
+        if (!scoped.length) return {}
+
+        const imageLayers = (['effect', 'pattern', 'gradient'] as const)
+            .flatMap(type => grouped[type].map(properties => ({type, properties})))
+            .map(({type, properties}) => ({
+                type,
+                size: properties.backgroundSize,
+                count: [properties.backgroundImage, properties.background]
+                    .filter((image): image is string => Boolean(image))
+                    .reduce((total, image) => total + countTopLevelItems(image), 0),
+            }))
+            .filter(({count}) => count > 0)
+
+        const variables: Record<string, string> = {}
+
+        scoped.forEach(({animationType, target}) => {
+            const spec = LAYER_ANIMATIONS[animationType!]!
+            const name = `--xeerpe-${animationType}`
+
+            const write = (
+                property: 'size' | 'position',
+                animatesLayer: (type: LayerType) => boolean,
+                animated: { from: string, to: string },
+                resting: (size?: string) => string
+            ) => {
+                if (imageLayers.every(({type}) => animatesLayer(type))) return
+
+                const perImage = (value: 'from' | 'to') => imageLayers
+                    .flatMap(({type, size, count}) =>
+                        Array<string>(count).fill(animatesLayer(type) ? animated[value] : resting(size)))
+                    .join(', ')
+
+                variables[`${name}-${property}-from`] = perImage('from')
+                variables[`${name}-${property}-to`] = perImage('to')
+            }
+
+            if (spec.size) {
+                write('size', type => type === 'gradient' && target === 'gradients',
+                    {from: '100% 100%', to: spec.size}, size => size ?? 'auto')
+            }
+
+            if (spec.position) {
+                write('position', type => type === (target === 'patterns' ? 'pattern' : 'gradient'),
+                    spec.position, () => 'center')
+            }
+        })
+
+        return variables
     }
 
     toTextStyle(): Record<string, string> {
