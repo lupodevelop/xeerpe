@@ -10,6 +10,7 @@ import {
     Params,
     PlaygroundState,
     Primitive,
+    RecordedCall,
 } from '@/src/models/playground.ts'
 
 export const emptyState: PlaygroundState = {layers: []}
@@ -48,7 +49,7 @@ const toParams = (source: unknown): Params =>
     ) as Params
 
 export const presetToState = (name: string): PlaygroundState => {
-    const calls: { method: string; options: Record<string, unknown> }[] = []
+    const calls: RecordedCall[] = []
 
     const recorder: unknown = new Proxy({}, {
         get: (_, method: string) => (options: Record<string, unknown> = {}) => {

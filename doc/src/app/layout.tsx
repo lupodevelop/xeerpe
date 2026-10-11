@@ -4,6 +4,7 @@ import {
     AUTHOR_NAME, AUTHOR_URL, INDEXABLE,
     serializeJsonLd, softwareJsonLd, BACKGROUND_COLOR,
 } from "@/src/config/site.ts";
+import {ChildrenProps} from "@/src/models/layout.ts";
 import Sidebar from "@cmp/core/sidebar/sidebar.tsx";
 import Navbar from "@cmp/core/navbar/navbar.tsx";
 import {SidebarProvider} from "@/src/context/sidebarContext.tsx";
@@ -65,7 +66,7 @@ export const viewport: Viewport = {
     colorScheme: 'dark'
 }
 
-const RootLayout = ({children}: { children: React.ReactNode }) => {
+const RootLayout = ({children}: ChildrenProps) => {
 
     const xeerpeBackground = new Builder()
         .radialGradient({from: 'rgba(0,255,140,0.12)', to: 'transparent', size: 'closest-side'})

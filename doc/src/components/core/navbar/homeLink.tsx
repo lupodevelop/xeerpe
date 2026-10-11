@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import {useSidebar} from "@/src/context/sidebarContext.tsx";
+import {HomeLinkProps} from "@/src/models/navbar.ts";
 
-const HomeLink = ({className, children}: { className?: string, children: React.ReactNode }) => {
+const HomeLink = ({className, children}: HomeLinkProps) => {
     const {close} = useSidebar();
     return (
         <Link href="/" className={className} onClick={close}>

@@ -4,12 +4,9 @@ import Link from 'next/link'
 import {usePathname} from 'next/navigation'
 import styles from './sidebar.module.css'
 import {useSidebar} from "@/src/context/sidebarContext.tsx";
+import {SidebarLinkProps} from "@/src/models/sidebar.ts";
 
-const SidebarLink = ({href, children, external}: {
-    href: string
-    children: React.ReactNode
-    external?: boolean
-}) => {
+const SidebarLink = ({href, children, external}: SidebarLinkProps) => {
     const { close } = useSidebar();
     const pathname = usePathname()
     const isActive = !external && pathname === href

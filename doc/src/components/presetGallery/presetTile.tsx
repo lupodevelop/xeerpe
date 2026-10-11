@@ -2,30 +2,35 @@
 
 import {useState} from 'react'
 import classes from './presetGallery.module.css'
+import ContextPreview from "@cmp/contextPreview/contextPreview.tsx";
 import {PresetTileProps} from "@/src/models/presetGallery.ts";
 
-const PresetTile = ({name, style}: PresetTileProps) => {
+const PresetTile = ({name, style, expandedCode}: PresetTileProps) => {
     const [copied, setCopied] = useState(false)
 
     const handleCopy = async () => {
-        await navigator.clipboard.writeText(`new Preset('${name}').toStyle()`)
+        await navigator.clipboard.writeText(name)
         setCopied(true)
         setTimeout(() => setCopied(false), 1500)
     }
 
     return (
-        <button
-            type="button"
-            className={classes.tile}
-            onClick={handleCopy}
-            aria-label={`Copy the code of the ${name} preset`}
-        >
-            <span className={classes.preview} style={style} />
+        <div className={classes.tile}>
+            <ContextPreview title={name} style={style} code={`new Preset('${name}').toStyle()`} expandedCode={expandedCode} className={classes.previewButton}>
+                <span className={classes.preview} style={style} />
+            </ContextPreview>
             <span className={classes.caption}>
                 <code className={classes.name}>{name}</code>
-                <span className={classes.action}>{copied ? '✓ Copied' : 'Copy'}</span>
+                <button
+                    type="button"
+                    className={classes.action}
+                    onClick={handleCopy}
+                    aria-label={`Copy the name of the ${name} preset`}
+                >
+                    {copied ? '✓ Copied' : 'Copy name'}
+                </button>
             </span>
-        </button>
+        </div>
     )
 }
 

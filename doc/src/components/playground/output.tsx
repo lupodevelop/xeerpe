@@ -6,15 +6,9 @@ import Button from '@cmp/buttons/button.tsx'
 import SegmentedTabs from '@cmp/segmentedTabs/segmentedTabs.tsx'
 import codeBlockClasses from '@cmp/codeBlock/codeBlock.module.css'
 import classes from './playground.module.css'
+import {HighlightedOutput, OutputProps, OutputTab, OutputTabItem} from '@/src/models/playground.ts'
 
-interface OutputProps {
-    snippet: string
-    css: string
-}
-
-type OutputTab = 'snippet' | 'css'
-
-const tabs: { id: OutputTab; label: string; lang: string }[] = [
+const tabs: OutputTabItem[] = [
     {id: 'snippet', label: 'Snippet', lang: 'ts'},
     {id: 'css', label: 'CSS', lang: 'css'},
 ]
@@ -22,7 +16,7 @@ const tabs: { id: OutputTab; label: string; lang: string }[] = [
 const Output = ({snippet, css}: OutputProps) => {
     const [active, setActive] = useState<OutputTab>('snippet')
     const [copied, setCopied] = useState(false)
-    const [highlighted, setHighlighted] = useState<{ code: string; html: string } | null>(null)
+    const [highlighted, setHighlighted] = useState<HighlightedOutput | null>(null)
 
     const tab = tabs.find((item) => item.id === active) ?? tabs[0]
     const code = active === 'snippet' ? snippet : css

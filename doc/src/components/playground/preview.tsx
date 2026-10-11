@@ -1,23 +1,8 @@
 'use client'
 
-import {Component, ReactNode} from 'react'
+import {Component} from 'react'
 import classes from './playground.module.css'
-
-interface PreviewProps {
-    style: Record<string, string>
-    error: string | null
-    empty: boolean
-}
-
-interface BoundaryProps {
-    resetKey: string
-    children: ReactNode
-}
-
-interface BoundaryState {
-    failed: boolean
-    resetKey: string
-}
+import {BoundaryProps, BoundaryState, PreviewProps} from '@/src/models/playground.ts'
 
 class PreviewBoundary extends Component<BoundaryProps, BoundaryState> {
     state: BoundaryState = {failed: false, resetKey: this.props.resetKey}

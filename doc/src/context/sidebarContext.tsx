@@ -1,10 +1,11 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import {SidebarContextValue} from "@/src/models/sidebar.ts";
+import {ChildrenProps} from "@/src/models/layout.ts";
 
 const SidebarContext = createContext<SidebarContextValue | null>(null);
 
-export const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
+export const SidebarProvider = ({ children }: ChildrenProps) => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {

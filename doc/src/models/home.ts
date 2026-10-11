@@ -9,6 +9,20 @@ export interface ChainStep {
     apply: (builder: Builder) => Builder
 }
 
+export interface ChainTab {
+    id: string
+    label: string
+    panel: ReactNode
+}
+
+export interface ChainPanelProps {
+    steps: ChainStep[]
+}
+
+export interface ChainTabsProps {
+    tabs: ChainTab[]
+}
+
 export interface Chain {
     id: string
     name: string

@@ -1,7 +1,7 @@
 import classes from "./guide.module.css"
-import React from "react";
+import {ChildrenProps} from "@/src/models/layout.ts";
 
-const DocLayout = ({children}: { children: React.ReactNode }) => (
+const DocLayout = ({children}: ChildrenProps) => (
     <main id="main-content" tabIndex={-1} className={classes.guideContainer}>
         <div className={classes.guideContents}>
             {children}

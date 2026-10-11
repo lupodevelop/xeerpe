@@ -1,8 +1,5 @@
 import classes from './checkbox.module.css'
-
-interface CheckboxProps extends Omit<React.ComponentProps<'input'>, 'type'> {
-    label: string
-}
+import {CheckboxProps} from '@/src/models/checkbox.ts'
 
 const Checkbox = ({label, className, ...rest}: CheckboxProps) => (
     <label className={`${classes.checkbox}${className ? ` ${className}` : ''}`}>

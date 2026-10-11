@@ -7,4 +7,5 @@ export interface PresetGalleryProps {
 export interface PresetTileProps {
     name: string
     style: Record<string, string>
+    expandedCode?: string
 }

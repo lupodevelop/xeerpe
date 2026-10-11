@@ -1,7 +1,7 @@
 'use client'
 
 import {useId} from 'react'
-import {Field, Primitive} from '@/src/models/playground.ts'
+import {FieldControlProps} from '@/src/models/playground.ts'
 import FormField from '@cmp/formField/formField.tsx'
 import Input from '@cmp/input/input.tsx'
 import Select from '@cmp/select/select.tsx'
@@ -9,12 +9,6 @@ import Checkbox from '@cmp/checkbox/checkbox.tsx'
 import RangeInput from '@cmp/rangeInput/rangeInput.tsx'
 import ColorInput from '@cmp/colorInput/colorInput.tsx'
 import classes from './playground.module.css'
-
-interface FieldControlProps {
-    field: Field
-    value: Primitive | undefined
-    onChange: (value: Primitive) => void
-}
 
 const HEX_PICKER = /^#[0-9a-fA-F]{6}$/
 

@@ -1,3 +1,5 @@
+import {Dispatch, ReactNode} from "react";
+
 export type Primitive = string | number | boolean
 export type Params = Record<string, Primitive>
 export type Literal = Primitive | Literal[] | { [key: string]: Literal }
@@ -74,4 +76,87 @@ export interface BuildResult {
     error: string | null
     errors: Record<string, string>
     warnings: Record<string, string>
+}
+
+export interface RecordedCall {
+    method: string
+    options: Record<string, unknown>
+}
+
+export interface LayerListProps {
+    layers: Layer[]
+    selectedId: string | undefined
+    errors: Record<string, string>
+    warnings: Record<string, string>
+    dispatch: Dispatch<PlaygroundAction>
+    onSelect: (id: string) => void
+}
+
+export interface FieldControlProps {
+    field: Field
+    value: Primitive | undefined
+    onChange: (value: Primitive) => void
+}
+
+export type OutputTab = 'snippet' | 'css'
+
+export interface OutputProps {
+    snippet: string
+    css: string
+}
+
+export interface OutputTabItem {
+    id: OutputTab
+    label: string
+    lang: string
+}
+
+export interface HighlightedOutput {
+    code: string
+    html: string
+}
+
+export interface LayerControlsProps {
+    layer: Layer | undefined
+    error?: string
+    warning?: string
+    dispatch: Dispatch<PlaygroundAction>
+}
+
+export interface FieldGroupProps {
+    fields: Field[]
+    values: Params
+    onChange: (key: string, value: Primitive) => void
+}
+
+export interface PreviewProps {
+    style: Record<string, string>
+    error: string | null
+    empty: boolean
+}
+
+export interface BoundaryProps {
+    resetKey: string
+    children: ReactNode
+}
+
+export interface BoundaryState {
+    failed: boolean
+    resetKey: string
+}
+
+export interface AddLayerMenuProps {
+    alwaysOpen: boolean
+    onAdd: (method: string) => void
+}
+
+export type PanelTab = 'layers' | 'controls' | 'code'
+
+export interface PanelTabItem {
+    id: PanelTab
+    label: string
+}
+
+export interface PlaygroundProps {
+    keyframes: Record<string, string>
 }

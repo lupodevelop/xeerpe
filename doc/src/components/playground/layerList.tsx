@@ -1,20 +1,10 @@
 'use client'
 
-import {Dispatch} from 'react'
 import {findMethod} from '@/src/data/playgroundRegistry.ts'
-import {Layer, PlaygroundAction} from '@/src/models/playground.ts'
+import {LayerListProps} from '@/src/models/playground.ts'
 import {createId} from '@/src/utils/playground.ts'
 import Button from '@cmp/buttons/button.tsx'
 import classes from './playground.module.css'
-
-interface LayerListProps {
-    layers: Layer[]
-    selectedId: string | undefined
-    errors: Record<string, string>
-    warnings: Record<string, string>
-    dispatch: Dispatch<PlaygroundAction>
-    onSelect: (id: string) => void
-}
 
 const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: LayerListProps) => {
     if (!layers.length) {

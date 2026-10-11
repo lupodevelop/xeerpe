@@ -4,11 +4,7 @@ import {useState} from 'react'
 import {playgroundGroups, playgroundMethods} from '@/src/data/playgroundRegistry.ts'
 import Button from '@cmp/buttons/button.tsx'
 import classes from './playground.module.css'
-
-interface AddLayerMenuProps {
-    alwaysOpen: boolean
-    onAdd: (method: string) => void
-}
+import {AddLayerMenuProps} from '@/src/models/playground.ts'
 
 const AddLayerMenu = ({alwaysOpen, onAdd}: AddLayerMenuProps) => {
     const [open, setOpen] = useState(false)

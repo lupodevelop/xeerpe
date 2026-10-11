@@ -1,3 +1,5 @@
+import {ArticleJsonLdPage, SocialMetadataPage} from '@/src/models/site.ts'
+
 export const SITE_URL = 'https://www.xeerpe.io'
 
 export const SITE_NAME = 'xeerpe'
@@ -49,7 +51,7 @@ export const softwareJsonLd = () => ({
 })
 
 export const articleJsonLd = (
-    page: { title: string; description?: string; path: string; updatedAt?: string }
+    page: ArticleJsonLdPage
 ) => ({
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
@@ -72,7 +74,7 @@ export const websiteJsonLd = () => ({
 })
 
 export const socialMetadata = (
-    page: { title: string; description?: string; path: string; type?: 'website' | 'article' }
+    page: SocialMetadataPage
 ) => ({
     openGraph: {
         type: page.type ?? 'website',

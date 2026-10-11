@@ -1,3 +1,11 @@
+import {ReactNode} from "react";
+
+export interface SidebarLinkProps {
+    href: string
+    children: ReactNode
+    external?: boolean
+}
+
 export interface SidebarItem {
     title: string
     slug: string

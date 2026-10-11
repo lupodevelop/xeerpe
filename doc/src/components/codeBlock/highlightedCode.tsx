@@ -2,12 +2,7 @@ import {compileMDX} from 'next-mdx-remote/rsc'
 import rehypePrettyCode from 'rehype-pretty-code'
 import {codeTheme} from '@/src/config/codeTheme.ts'
 import CodeBlock from '@cmp/codeBlock/codeBlock.tsx'
-
-interface HighlightedCodeProps {
-    code: string
-    lang?: string
-    className?: string
-}
+import {HighlightedCodeProps} from '@/src/models/highlightedCode.ts'
 
 const HighlightedCode = async ({code, lang = 'ts', className}: HighlightedCodeProps) => {
     const {content} = await compileMDX({

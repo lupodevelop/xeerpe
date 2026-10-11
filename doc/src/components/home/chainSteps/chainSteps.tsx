@@ -3,9 +3,9 @@ import classes from './chainSteps.module.css'
 import Code from '@cmp/codeBlock/highlightedCode.tsx'
 import ChainTabs from '@cmp/home/chainSteps/chainTabs.tsx'
 import {chains} from "@/src/data/home.ts";
-import {ChainStep} from "@/src/models/home.ts";
+import {ChainPanelProps} from "@/src/models/home.ts";
 
-const ChainPanel = ({steps}: { steps: ChainStep[] }) => {
+const ChainPanel = ({steps}: ChainPanelProps) => {
     const fullChain = ['new Builder()', ...steps.map((step) => step.code), '.toStyle()']
         .join('\n')
         .replace(/\n\./g, '\n  .')

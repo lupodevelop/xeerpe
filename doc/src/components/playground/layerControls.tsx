@@ -1,24 +1,10 @@
 'use client'
 
-import {Dispatch} from 'react'
 import {findMethod} from '@/src/data/playgroundRegistry.ts'
-import {Field, Layer, Params, PlaygroundAction, Primitive} from '@/src/models/playground.ts'
+import {Field, FieldGroupProps, LayerControlsProps} from '@/src/models/playground.ts'
 import Button from '@cmp/buttons/button.tsx'
 import FieldControl from '@cmp/playground/fieldControl.tsx'
 import classes from './playground.module.css'
-
-interface LayerControlsProps {
-    layer: Layer | undefined
-    error?: string
-    warning?: string
-    dispatch: Dispatch<PlaygroundAction>
-}
-
-interface FieldGroupProps {
-    fields: Field[]
-    values: Params
-    onChange: (key: string, value: Primitive) => void
-}
 
 const FieldGroup = ({fields, values, onChange}: FieldGroupProps) => {
     const main = fields.filter((field) => !field.advanced)

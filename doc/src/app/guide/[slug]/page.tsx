@@ -15,6 +15,7 @@ import GuideNav from "@cmp/guideNavPages/guideNav.tsx";
 import { getGuidePage } from "@/src/data/sidebarItems.ts";
 import { articleJsonLd, serializeJsonLd, socialMetadata } from "@/src/config/site.ts";
 import {TocItem} from "@/src/models/tocItem.ts";
+import {GuideSlugProps} from "@/src/models/layout.ts";
 import Table from "@cmp/table/table.tsx";
 import Prop from "@cmp/prop/prop.tsx";
 import ColorPalette from "@cmp/colorPalette/colorPalette.tsx";
@@ -24,7 +25,7 @@ export const dynamicParams = false
 const mdxComponents = {XeerpeDemo, pre: CodeBlock}
 
 export const generateMetadata = async (
-    {params}: { params: Promise<{ slug: string }> }
+    {params}: GuideSlugProps
 ): Promise<Metadata> => {
     const {slug} = await params
     const page = getGuidePage(slug)
@@ -52,9 +53,7 @@ export const generateStaticParams = async () => {
         .map((file) => ({slug: file.replace(/\.mdx$/, '')}))
 }
 
-const GuidePage = async ({params}: {
-    params: Promise<{ slug: string }>
-}) => {
+const GuidePage = async ({params}: GuideSlugProps) => {
 
 
     const {slug} = await params

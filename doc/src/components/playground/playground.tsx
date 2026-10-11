@@ -3,7 +3,7 @@
 import {ChangeEvent, useEffect, useMemo, useReducer, useRef, useState} from 'react'
 import {findMethod} from '@/src/data/playgroundRegistry.ts'
 import {presetCategories} from 'xeerpe'
-import {PlaygroundState} from '@/src/models/playground.ts'
+import {PanelTab, PanelTabItem, PlaygroundProps, PlaygroundState} from '@/src/models/playground.ts'
 import {
     buildFromState,
     createId,
@@ -26,9 +26,7 @@ import Preview from '@cmp/playground/preview.tsx'
 import Output from '@cmp/playground/output.tsx'
 import classes from './playground.module.css'
 
-type PanelTab = 'layers' | 'controls' | 'code'
-
-const panelTabs: { id: PanelTab; label: string }[] = [
+const panelTabs: PanelTabItem[] = [
     {id: 'layers', label: 'Layers'},
     {id: 'controls', label: 'Controls'},
     {id: 'code', label: 'Code'},
@@ -36,7 +34,7 @@ const panelTabs: { id: PanelTab; label: string }[] = [
 
 const HASH_PREFIX = '#s='
 
-const Playground = ({keyframes}: { keyframes: Record<string, string> }) => {
+const Playground = ({keyframes}: PlaygroundProps) => {
     const [history, dispatch] = useReducer(playgroundReducer, initialHistory)
     const [selectedId, setSelectedId] = useState<string>()
     const [panel, setPanel] = useState<PanelTab>('layers')

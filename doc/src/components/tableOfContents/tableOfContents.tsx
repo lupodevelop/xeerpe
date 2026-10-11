@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import classes from './tableOfContent.module.css'
-import { TocItem } from '@/src/models/tocItem.ts'
+import { TableOfContentsProps } from '@/src/models/tocItem.ts'
 
 const scrollBehavior = (): ScrollBehavior =>
     window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
 
-const TableOfContents = ({ items }: { items: TocItem[] }) => {
+const TableOfContents = ({ items }: TableOfContentsProps) => {
     const [activeId, setActiveId] = useState(items[0]?.id ?? '')
 
     useEffect(() => {
