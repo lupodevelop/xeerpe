@@ -63,3 +63,9 @@
     opacity: 1;
     color: var(--accent);
 }
+
+@media (hover: none) {
+    .action {
+        opacity: 1;
+    }
+}

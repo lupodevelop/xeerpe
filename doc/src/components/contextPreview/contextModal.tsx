@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useId, useRef, useState} from 'react'
 import classes from './contextPreview.module.css'
 import Button from "@cmp/buttons/button.tsx";
 import SegmentedTabs from "@cmp/segmentedTabs/segmentedTabs.tsx";
@@ -55,14 +55,14 @@ const Scene = ({scene, style}: ContextSceneProps) => {
             return (
                 <div className={classes.cardStage}>
                     <div className={classes.buttons}>
-                        <button type="button" className={classes.button}>
+                        <span className={classes.button}>
                             <span className={classes.layer} style={style}/>
                             <span>Get started</span>
-                        </button>
-                        <button type="button" className={`${classes.button} ${classes.buttonSmall}`}>
+                        </span>
+                        <span className={`${classes.button} ${classes.buttonSmall}`}>
                             <span className={classes.layer} style={style}/>
                             <span>Learn more</span>
-                        </button>
+                        </span>
                     </div>
                 </div>
             )
@@ -89,6 +89,7 @@ const Scene = ({scene, style}: ContextSceneProps) => {
 
 const ContextModal = ({open, onClose, title, style, code, expandedCode, css}: ContextModalProps) => {
     const dialogRef = useRef<HTMLDialogElement>(null)
+    const tabsId = useId()
     const [copied, setCopied] = useState<ContextCopyKind | null>(null)
     const [darkText, setDarkText] = useState(false)
     const [scene, setScene] = useState<ContextScene>('hero')
@@ -139,6 +140,7 @@ const ContextModal = ({open, onClose, title, style, code, expandedCode, css}: Co
                             activeId={scene}
                             onChange={(id) => setScene(id as ContextScene)}
                             ariaLabel="Context"
+                            idPrefix={tabsId}
                             className={classes.tabs}
                         />
                         <Button
@@ -153,10 +155,23 @@ const ContextModal = ({open, onClose, title, style, code, expandedCode, css}: Co
                             ✕
                         </Button>
                     </header>
-                    <div className={classes.stage} data-text={darkText ? 'dark' : 'light'}>
-                        <Scene scene={scene} style={style}/>
+                    <div
+                        className={classes.stage}
+                        role="tabpanel"
+                        aria-labelledby={`${tabsId}-${scene}`}
+                        data-text={darkText ? 'dark' : 'light'}
+                    >
+                        <p className="sr-only">
+                            {`Preview of ${title} applied to a ${scene}. The sample content is decorative.`}
+                        </p>
+                        <div className={classes.scene} aria-hidden="true">
+                            <Scene scene={scene} style={style}/>
+                        </div>
                     </div>
                     <footer className={classes.footer}>
+                        <span role="status" className="sr-only">
+                            {copied ? 'Copied to clipboard' : ''}
+                        </span>
                         {code && (
                             <Button size="sm" title={code} onClick={() => copy('code')}>
                                 {copied === 'code' ? '✓ Copied' : expandedCode ? 'Copy as Preset' : 'Copy code'}

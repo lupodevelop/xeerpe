@@ -14,10 +14,10 @@ const ContextPreview = ({title, style, code, expandedCode, children, className}:
                 type="button"
                 className={`${classes.trigger} ${className ?? ''}`}
                 onClick={() => setOpen(true)}
-                aria-label={`View ${title} in a real context`}
+                aria-label={`View in context: ${title}`}
             >
                 {children}
-                <span className={classes.hint}>View in context</span>
+                <span className={classes.hint} aria-hidden="true">View in context</span>
             </button>
 
             <ContextModal

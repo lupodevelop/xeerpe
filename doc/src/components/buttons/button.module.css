@@ -36,7 +36,7 @@
 
 .accent {
     border: 1px solid rgba(var(--accent-rgb), 0.6);
-    background: linear-gradient(135deg, #2b7420, #378f33);
+    background: linear-gradient(135deg, #24671b, #2c7f27);
     color: white !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
     font-weight: 600;
