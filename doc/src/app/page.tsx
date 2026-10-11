@@ -3,6 +3,7 @@ import xeerpeIcon from '@assets/xeerpeIconLarge.png'
 import xeerpeLogo from '@assets/xeerpeLogo.png'
 import classes from "./page.module.css"
 import LinkButton from "@cmp/buttons/linkButton.tsx";
+import PlayIcon from "@cmp/icons/playIcon.tsx";
 import ChainSteps from "@cmp/home/chainSteps/chainSteps.tsx";
 import PresetBento from "@cmp/home/presetBento/presetBento.tsx";
 import UiExamples from "@cmp/home/uiExamples/uiExamples.tsx";
@@ -52,6 +53,7 @@ const Page = () => {
                         </ul>
                         <div className={classes.actions}>
                             <LinkButton href={'/guide'}>Get Started →</LinkButton>
+                            <LinkButton href={'/playground'} variant="accent"><PlayIcon/>Play with xeerpe</LinkButton>
                         </div>
                     </div>
                 </section>
@@ -111,6 +113,7 @@ const Page = () => {
                         </p>
                         <div className={classes.actions}>
                             <LinkButton href={'/guide/usage'} >Read the usage guide</LinkButton>
+                            <LinkButton href={'/playground'} variant="accent"><PlayIcon/>Play with xeerpe</LinkButton>
                         </div>
                     </div>
                     <div className={classes.joke}>
