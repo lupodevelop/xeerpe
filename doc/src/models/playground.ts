@@ -133,6 +133,7 @@ export interface PreviewProps {
     style: Record<string, string>
     error: string | null
     empty: boolean
+    children?: ReactNode
 }
 
 export interface BoundaryProps {

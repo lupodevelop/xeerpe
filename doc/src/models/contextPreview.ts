@@ -14,6 +14,16 @@ export interface ContextSceneProps {
     style: CSSProperties
 }
 
+export interface ContextModalProps {
+    open: boolean
+    onClose: () => void
+    title: string
+    style: CSSProperties
+    code?: string
+    expandedCode?: string
+    css?: string
+}
+
 export interface ContextPreviewProps {
     title: string
     style: CSSProperties

@@ -69,6 +69,18 @@
     transition: height 0.2s ease;
 }
 
+.previewAction {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+}
+
+button.previewAction:disabled {
+    opacity: 0.7;
+}
+
 .checker {
     position: absolute;
     inset: 0;

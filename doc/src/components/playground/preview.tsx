@@ -24,7 +24,7 @@ class PreviewBoundary extends Component<BoundaryProps, BoundaryState> {
     }
 }
 
-const Preview = ({style, error, empty}: PreviewProps) => (
+const Preview = ({style, error, empty, children}: PreviewProps) => (
     <div className={classes.previewFrame}>
         <div className={classes.checker}>
             <PreviewBoundary resetKey={JSON.stringify(style)}>
@@ -33,6 +33,7 @@ const Preview = ({style, error, empty}: PreviewProps) => (
         </div>
         {empty && <p className={classes.previewHint}>Your background appears here. Add a layer, pick a preset or hit Surprise me.</p>}
         {error && <p role="alert" className={classes.previewError}>{error}</p>}
+        {children}
     </div>
 )
 

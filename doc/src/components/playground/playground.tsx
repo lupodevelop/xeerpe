@@ -24,6 +24,7 @@ import LayerList from '@cmp/playground/layerList.tsx'
 import LayerControls from '@cmp/playground/layerControls.tsx'
 import Preview from '@cmp/playground/preview.tsx'
 import Output from '@cmp/playground/output.tsx'
+import ContextModal from '@cmp/contextPreview/contextModal.tsx'
 import classes from './playground.module.css'
 
 const panelTabs: PanelTabItem[] = [
@@ -39,6 +40,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
     const [selectedId, setSelectedId] = useState<string>()
     const [panel, setPanel] = useState<PanelTab>('layers')
     const [shared, setShared] = useState(false)
+    const [contextOpen, setContextOpen] = useState(false)
     const hydrated = useRef(false)
 
     const state = history.present
@@ -189,8 +191,26 @@ const Playground = ({keyframes}: PlaygroundProps) => {
                         style={result.style}
                         error={result.error}
                         empty={!state.layers.length}
-                    />
+                    >
+                        <Button
+                            size="sm"
+                            className={classes.previewAction}
+                            disabled={!state.layers.length || Boolean(result.error)}
+                            onClick={() => setContextOpen(true)}
+                        >
+                            View in context
+                        </Button>
+                    </Preview>
                 </section>
+
+                <ContextModal
+                    open={contextOpen}
+                    onClose={() => setContextOpen(false)}
+                    title="Playground"
+                    style={result.style}
+                    code={snippet}
+                    css={css}
+                />
 
                 <Panel
                     aria-label="Code"
