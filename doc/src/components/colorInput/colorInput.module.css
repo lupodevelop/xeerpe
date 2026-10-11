@@ -1,0 +1,17 @@
+.color {
+    flex: none;
+    width: 44px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: pointer;
+}
+
+@media (pointer: coarse) {
+    .color {
+        width: 52px;
+        height: 44px;
+    }
+}

@@ -33,3 +33,81 @@
 .secondary:hover {
     color: white;
 }
+
+.accent {
+    border: 1px solid rgba(var(--accent-rgb), 0.6);
+    background: linear-gradient(135deg, var(--accent), #8fdc6f);
+    color: #07140a;
+    font-weight: 600;
+    box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.5), 0 4px 18px rgba(var(--accent-rgb), 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    animation: accentPulse 3.2s ease-in-out infinite;
+}
+
+.accent:hover:not(:disabled) {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.25), 0 6px 24px rgba(var(--accent-rgb), 0.5);
+    animation: none;
+}
+
+.accent:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+@keyframes accentPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.45), 0 4px 18px rgba(var(--accent-rgb), 0.35);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0), 0 4px 22px rgba(var(--accent-rgb), 0.5);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .accent {
+        animation: none;
+    }
+}
+
+.icon {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text);
+    padding: 0;
+}
+
+.icon:hover:not(:disabled) {
+    background: var(--border-strong);
+}
+
+.sm {
+    min-height: 36px;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+}
+
+.sm.secondary {
+    padding: 0.35rem 0.75rem;
+}
+
+.sm.icon {
+    min-width: 36px;
+    padding: 0;
+}
+
+.xeerpeButton:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+@media (pointer: coarse) {
+    .sm {
+        min-height: 44px;
+    }
+
+    .sm.icon {
+        min-width: 44px;
+    }
+}

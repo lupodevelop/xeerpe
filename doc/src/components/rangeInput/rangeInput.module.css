@@ -1,0 +1,6 @@
+.range {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    accent-color: var(--accent);
+}

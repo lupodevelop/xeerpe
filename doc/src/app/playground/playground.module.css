@@ -1,0 +1,11 @@
+.page {
+    height: auto;
+    padding-top: 0.5rem;
+}
+
+@media (min-width: 1200px) {
+    .page {
+        height: calc(100% - 64px - 32px);
+        padding-top: 0;
+    }
+}

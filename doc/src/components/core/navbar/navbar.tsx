@@ -27,6 +27,7 @@ const Navbar = () => {
 
             <nav aria-label="xeerpe main navigation" className={classes.navbar}>
                 <NavLink href="/guide">Guide</NavLink>
+                <NavLink href="/playground">Playground</NavLink>
                 <NavLink href="/changelog">Changelog</NavLink>
                 <NavLink href="/about">About</NavLink>
                 <a

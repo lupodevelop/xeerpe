@@ -1,0 +1,23 @@
+.input {
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    min-height: 36px;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface-raised);
+    font: inherit;
+    font-size: 16px;
+    color: var(--text);
+}
+
+.input:focus-visible {
+    outline-offset: 1px;
+}
+
+@media (pointer: coarse) {
+    .input {
+        min-height: 44px;
+    }
+}
