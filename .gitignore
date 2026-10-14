@@ -6,9 +6,8 @@ node_modules/
 
 # Build outputs
 lib/dist/
-playground/.next/
-playground/out/
 *.tsbuildinfo
+*.tgz
 
 # Next.js
 .next/
@@ -48,3 +47,4 @@ next-env.d.ts
 # Misc
 .cache/
 coverage/
+/RELEASING.md

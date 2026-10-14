@@ -58,14 +58,19 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:nicolacentonze/xeerpe.git"
+    "url": "git+https://github.com/nicolacentonze/xeerpe.git"
   },
   "scripts": {
-    "build": "rm -rf dist && rspack build && tsc --emitDeclarationOnly --outDir dist && cp dist/index.d.ts dist/index.d.cts && cp src/css/animations.css dist/animations.css"
+    "build": "rm -rf dist && rspack build && tsc --emitDeclarationOnly --outDir dist && cp dist/index.d.ts dist/index.d.cts && cp src/css/animations.css dist/animations.css",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rspack/cli": "latest",
-    "@rspack/core": "latest",
+    "@rspack/cli": "^2.2.4",
+    "@rspack/core": "^2.2.4",
     "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
