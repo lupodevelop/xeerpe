@@ -21,17 +21,40 @@
     align-items: center;
     gap: 0.5rem;
     order: 0;
+}
 
-    select {
-        flex: 1 1 140px;
-        min-width: 0;
-    }
+.preset {
+    flex: 1 1 180px;
+    max-width: 320px;
 }
 
 .toolbarActions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+}
+
+@media (max-width: 767px) {
+    .preset {
+        flex: 1 1 0;
+        max-width: none;
+    }
+
+    .toolbar {
+        row-gap: 0.85rem;
+    }
+
+    .toolbarActions {
+        flex-basis: 100%;
+        flex-wrap: nowrap;
+        gap: 0.7rem;
+    }
+
+    .toolbarActions > button {
+        flex: 1 1 0;
+        min-width: 0;
+        padding-inline: 0.4rem;
+    }
 }
 
 .tabs {

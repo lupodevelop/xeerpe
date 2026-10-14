@@ -388,7 +388,8 @@
     .header {
         flex-wrap: wrap;
         gap: 8px;
-        padding: 10px 12px;
+        row-gap: 16px;
+        padding: 12px 12px 14px;
     }
 
     .tabs {
@@ -417,11 +418,45 @@
         padding: 10px 12px;
     }
 
-    .footer > :last-child:nth-child(odd) {
+    .footer > button:last-of-type:nth-of-type(odd) {
         grid-column: 1 / -1;
     }
 
-    .pageGrid {
-        grid-template-columns: 1fr;
+    .dialog {
+        width: calc(100vw - 20px);
+        height: min(640px, calc(100dvh - 20px));
+        max-height: calc(100dvh - 20px);
+    }
+
+    .stage {
+        overscroll-behavior: contain;
+    }
+
+    .heroBody h3 {
+        font-size: 1.6rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .card {
+        min-height: 180px;
+        padding: 20px;
+    }
+
+    .pageContent {
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .pageGrid,
+    .pageRows {
+        gap: 10px;
+    }
+
+    .pageGrid div {
+        height: 64px;
     }
 }

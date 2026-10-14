@@ -46,7 +46,6 @@ export const starsBuilder = (options: StarsOptions): string => {
     const maxRadius = parseLength(strokeWidth).value
     const c = withAlpha(color, opacity, 0.9)
 
-    // Deterministic pseudo-random sequence: the same seed always draws the same sky
     let state = Math.max(1, Math.round(seed)) % 2147483647
     const random = () => (state = (state * 16807) % 2147483647) / 2147483647
 

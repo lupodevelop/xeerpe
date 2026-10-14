@@ -1,8 +1,7 @@
 'use client'
 
-import {ChangeEvent, useEffect, useMemo, useReducer, useRef, useState} from 'react'
+import {useEffect, useMemo, useReducer, useRef, useState} from 'react'
 import {findMethod} from '@/src/data/playgroundRegistry.ts'
-import {presetCategories} from 'xeerpe'
 import {PanelTab, PanelTabItem, PlaygroundProps, PlaygroundState} from '@/src/models/playground.ts'
 import {
     buildFromState,
@@ -17,7 +16,7 @@ import {
 import {initialHistory, playgroundReducer} from '@/src/utils/playgroundReducer.ts'
 import Button from '@cmp/buttons/button.tsx'
 import Panel from '@cmp/panel/panel.tsx'
-import Select from '@cmp/select/select.tsx'
+import PresetSelect from '@cmp/presetSelect/presetSelect.tsx'
 import SegmentedTabs from '@cmp/segmentedTabs/segmentedTabs.tsx'
 import AddLayerMenu from '@cmp/playground/addLayerMenu.tsx'
 import LayerList from '@cmp/playground/layerList.tsx'
@@ -39,6 +38,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
     const [history, dispatch] = useReducer(playgroundReducer, initialHistory)
     const [selectedId, setSelectedId] = useState<string>()
     const [panel, setPanel] = useState<PanelTab>('layers')
+    const [preset, setPreset] = useState<string>()
     const [shared, setShared] = useState(false)
     const [contextOpen, setContextOpen] = useState(false)
     const hydrated = useRef(false)
@@ -60,7 +60,10 @@ const Playground = ({keyframes}: PlaygroundProps) => {
         const onHashChange = () => {
             if (!window.location.hash.startsWith(HASH_PREFIX)) return
             const decoded = decodeState(window.location.hash.slice(HASH_PREFIX.length))
-            if (decoded) dispatch({type: 'LOAD', state: decoded})
+            if (!decoded) return
+
+            setPreset(undefined)
+            dispatch({type: 'LOAD', state: decoded})
         }
 
         window.addEventListener('hashchange', onHashChange)
@@ -90,8 +93,19 @@ const Playground = ({keyframes}: PlaygroundProps) => {
         setSelectedId(next.layers[next.layers.length - 1]?.id)
     }
 
-    function handlePreset(event: ChangeEvent<HTMLSelectElement>) {
-        if (event.target.value) load(presetToState(event.target.value))
+    function handlePreset(name: string) {
+        setPreset(name)
+        load(presetToState(name))
+    }
+
+    function handleRandom() {
+        setPreset(undefined)
+        load(generateRandomState())
+    }
+
+    function handleReset() {
+        setPreset(undefined)
+        dispatch({type: 'RESET'})
     }
 
     async function handleShare() {
@@ -109,18 +123,14 @@ const Playground = ({keyframes}: PlaygroundProps) => {
         <div className={classes.root}>
             <div className={classes.toolbar}>
                 <label className="sr-only" htmlFor="playground-preset">Start from a preset</label>
-                <Select id="playground-preset" value="" onChange={handlePreset}>
-                    <option value="" disabled>Start from a preset…</option>
-                    {Object.entries(presetCategories).map(([category, names]) => (
-                        <optgroup key={category} label={category.charAt(0).toUpperCase() + category.slice(1)}>
-                            {names.map((name) => (
-                                <option key={name} value={name}>{name}</option>
-                            ))}
-                        </optgroup>
-                    ))}
-                </Select>
+                <PresetSelect
+                    id="playground-preset"
+                    value={preset}
+                    className={classes.preset}
+                    onSelect={handlePreset}
+                />
 
-                <Button variant="accent" size="sm" onClick={() => load(generateRandomState())}>
+                <Button variant="accent" size="sm" onClick={handleRandom}>
                     ✦ Surprise me
                 </Button>
 
@@ -131,7 +141,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
                     <Button size="sm" disabled={!history.future.length} onClick={() => dispatch({type: 'REDO'})}>
                         Redo
                     </Button>
-                    <Button size="sm" disabled={!state.layers.length} onClick={() => dispatch({type: 'RESET'})}>
+                    <Button size="sm" disabled={!state.layers.length} onClick={handleReset}>
                         Reset
                     </Button>
                     <Button size="sm" disabled={!state.layers.length} onClick={handleShare}>
