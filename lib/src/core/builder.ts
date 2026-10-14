@@ -6,27 +6,43 @@ import {
     EffectType,
     NoiseOptions,
     VignetteOptions,
-    GrainOptions, BlurOptions, FilterType, FilterOptions, GlowOptions, PatternOptions, PatternType, DotsOptions,
-    GridOptions, StarsOptions, RaysOptions, AnimationOptions, AnimationType,
-    AnimationRange, ImageLayer, LayerAnimationSpec
-} from "../models/index.ts";
+    GrainOptions,
+    BlurOptions,
+    FilterType,
+    FilterOptions,
+    GlowOptions,
+    PatternOptions,
+    PatternType,
+    DotsOptions,
+    GridOptions,
+    StarsOptions,
+    RaysOptions,
+    AnimationOptions,
+    AnimationType,
+    AnimationRange,
+    ImageLayer,
+    LayerAnimationSpec,
+} from '../models/index.ts'
 import {
     buildGradientLayer,
     buildEffectLayer,
     buildFilterLayer,
     buildPatternLayer,
-    buildAnimationLayer, generateLiquidAnimation, generatePlasmaAnimation, generateFloatAnimation,
-    generateDriftAnimation
-} from "../generators/index.ts";
-import {countTopLevelItems} from "../utils/index.ts";
+    buildAnimationLayer,
+    generateLiquidAnimation,
+    generatePlasmaAnimation,
+    generateFloatAnimation,
+    generateDriftAnimation,
+} from '../generators/index.ts'
+import { countTopLevelItems } from '../utils/index.ts'
 import {
     ConicGradientOptions,
     GradientOptions,
     GradientType,
     LinearGradientOptions,
     MeshGradientOptions,
-    RadialGradientOptions
-} from "../models/index.ts";
+    RadialGradientOptions,
+} from '../models/index.ts'
 
 const LAYER_ANIMATIONS: Partial<Record<AnimationType, LayerAnimationSpec>> = {
     breathe: { size: '200% 200%' },
@@ -42,7 +58,7 @@ const SLIDING_GRADIENT_SIZES: Partial<Record<AnimationType, string>> = {
 }
 
 export class Builder {
-    private _layers: BuilderLayer[] = [];
+    private _layers: BuilderLayer[] = []
 
     gradient(type: GradientType, options: GradientOptions): this {
         const layer = buildGradientLayer(type, options)
@@ -168,7 +184,7 @@ export class Builder {
             filter: [],
             effect: [],
             pattern: [],
-            animation: []
+            animation: [],
         }
 
         this._layers.forEach((layer: BuilderLayer) => {
@@ -178,16 +194,17 @@ export class Builder {
         const style: Record<string, string> = {}
 
         if (grouped.gradient.length || grouped.effect.length || grouped.pattern.length) {
-            const backgroundImages = [...grouped.effect, ...grouped.pattern, ...grouped.gradient]
-                .flatMap(p => [p.backgroundImage, p.background].filter(Boolean))
+            const backgroundImages = [...grouped.effect, ...grouped.pattern, ...grouped.gradient].flatMap((p) =>
+                [p.backgroundImage, p.background].filter(Boolean),
+            )
 
             const backgroundSizes = [...grouped.effect, ...grouped.pattern, ...grouped.gradient]
-                .map(p => p.backgroundSize)
+                .map((p) => p.backgroundSize)
                 .filter(Boolean)
 
-            const boxShadows = grouped.effect.map(p => p.boxShadow).filter(Boolean)
+            const boxShadows = grouped.effect.map((p) => p.boxShadow).filter(Boolean)
 
-            const backgroundColor = grouped.gradient.find(p => p.backgroundColor)?.backgroundColor
+            const backgroundColor = grouped.gradient.find((p) => p.backgroundColor)?.backgroundColor
 
             if (backgroundImages.length) style.backgroundImage = backgroundImages.join(', ')
             if (backgroundSizes.length) style.backgroundSize = backgroundSizes.join(', ')
@@ -196,10 +213,11 @@ export class Builder {
             const imageLayers = this.imageLayers(grouped)
             const isUnsized = (size?: string) => !size || size === 'auto'
 
-            if (slidingSize && imageLayers.some(({type, size}) => type === 'gradient' && isUnsized(size))) {
+            if (slidingSize && imageLayers.some(({ type, size }) => type === 'gradient' && isUnsized(size))) {
                 style.backgroundSize = imageLayers
-                    .flatMap(({type, size, count}) =>
-                        Array<string>(count).fill(type === 'gradient' && isUnsized(size) ? slidingSize : size ?? 'auto'))
+                    .flatMap(({ type, size, count }) =>
+                        Array<string>(count).fill(type === 'gradient' && isUnsized(size) ? slidingSize : (size ?? 'auto')),
+                    )
                     .join(', ')
             }
 
@@ -208,15 +226,15 @@ export class Builder {
         }
 
         if (grouped.filter.length) {
-            const filters = grouped.filter.map(p => p.filter).filter(Boolean)
-            const backdropFilters = grouped.filter.map(p => p.backdropFilter).filter(Boolean)
+            const filters = grouped.filter.map((p) => p.filter).filter(Boolean)
+            const backdropFilters = grouped.filter.map((p) => p.backdropFilter).filter(Boolean)
 
             if (filters.length) style.filter = filters.join(' ')
             if (backdropFilters.length) style.backdropFilter = backdropFilters.join(' ')
         }
 
         if (grouped.animation.length) {
-            const animations = grouped.animation.map(p => p.animation).filter(Boolean)
+            const animations = grouped.animation.map((p) => p.animation).filter(Boolean)
 
             if (animations.length) style.animation = animations.join(', ')
 
@@ -230,27 +248,28 @@ export class Builder {
 
     private imageLayers(grouped: Record<LayerType, CSSProperties[]>): ImageLayer[] {
         return (['effect', 'pattern', 'gradient'] as const)
-            .flatMap(type => grouped[type].map(properties => ({type, properties})))
-            .map(({type, properties}) => ({
+            .flatMap((type) => grouped[type].map((properties) => ({ type, properties })))
+            .map(({ type, properties }) => ({
                 type,
                 size: properties.backgroundSize,
                 count: [properties.backgroundImage, properties.background]
                     .filter((image): image is string => Boolean(image))
                     .reduce((total, image) => total + countTopLevelItems(image), 0),
             }))
-            .filter(({count}) => count > 0)
+            .filter(({ count }) => count > 0)
     }
 
     private slidingGradientSize(): string | undefined {
         return this._layers
-            .filter(layer => layer.animationType && SLIDING_GRADIENT_SIZES[layer.animationType] && layer.target !== 'patterns')
-            .map(layer => SLIDING_GRADIENT_SIZES[layer.animationType!])
+            .filter((layer) => layer.animationType && SLIDING_GRADIENT_SIZES[layer.animationType] && layer.target !== 'patterns')
+            .map((layer) => SLIDING_GRADIENT_SIZES[layer.animationType!])
             .pop()
     }
 
     private layerAnimationVariables(grouped: Record<LayerType, CSSProperties[]>): Record<string, string> {
-        const scoped = this._layers.filter(layer =>
-            layer.animationType && LAYER_ANIMATIONS[layer.animationType] && layer.target !== 'all')
+        const scoped = this._layers.filter(
+            (layer) => layer.animationType && LAYER_ANIMATIONS[layer.animationType] && layer.target !== 'all',
+        )
 
         if (!scoped.length) return {}
 
@@ -258,7 +277,7 @@ export class Builder {
 
         const variables: Record<string, string> = {}
 
-        scoped.forEach(({animationType, target}) => {
+        scoped.forEach(({ animationType, target }) => {
             const spec = LAYER_ANIMATIONS[animationType!]!
             const name = `--xeerpe-${animationType}`
 
@@ -266,27 +285,37 @@ export class Builder {
                 property: 'size' | 'position',
                 animatesLayer: (type: LayerType) => boolean,
                 animated: AnimationRange,
-                resting: (size?: string) => string
+                resting: (size?: string) => string,
             ) => {
-                if (imageLayers.every(({type}) => animatesLayer(type))) return
+                if (imageLayers.every(({ type }) => animatesLayer(type))) return
 
-                const perImage = (value: 'from' | 'to') => imageLayers
-                    .flatMap(({type, size, count}) =>
-                        Array<string>(count).fill(animatesLayer(type) ? animated[value] : resting(size)))
-                    .join(', ')
+                const perImage = (value: 'from' | 'to') =>
+                    imageLayers
+                        .flatMap(({ type, size, count }) =>
+                            Array<string>(count).fill(animatesLayer(type) ? animated[value] : resting(size)),
+                        )
+                        .join(', ')
 
                 variables[`${name}-${property}-from`] = perImage('from')
                 variables[`${name}-${property}-to`] = perImage('to')
             }
 
             if (spec.size) {
-                write('size', type => type === 'gradient' && target === 'gradients',
-                    {from: '100% 100%', to: spec.size}, size => size ?? 'auto')
+                write(
+                    'size',
+                    (type) => type === 'gradient' && target === 'gradients',
+                    { from: '100% 100%', to: spec.size },
+                    (size) => size ?? 'auto',
+                )
             }
 
             if (spec.position) {
-                write('position', type => type === (target === 'patterns' ? 'pattern' : 'gradient'),
-                    spec.position, () => 'center')
+                write(
+                    'position',
+                    (type) => type === (target === 'patterns' ? 'pattern' : 'gradient'),
+                    spec.position,
+                    () => 'center',
+                )
             }
         })
 
@@ -309,5 +338,4 @@ export class Builder {
 
         return style
     }
-
 }

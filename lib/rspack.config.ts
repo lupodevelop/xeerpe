@@ -1,53 +1,53 @@
-import { defineConfig } from "@rspack/cli";
-import * as path from "path";
+import { defineConfig } from '@rspack/cli'
+import * as path from 'path'
 
 export default defineConfig([
-  {
-    entry: "./src/index.ts",
-    output: {
-      path: path.resolve(__dirname, "dist"),
-      filename: "index.mjs",
-      library: { type: "module" },
-      clean: true,
-    },
-    experiments: { outputModule: true },
-    resolve: {
-      extensions: [".ts", ".tsx", ".js"],
-      extensionAlias: {
-        ".js": [".ts", ".tsx", ".js"],
-      },
-    },
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          use: "builtin:swc-loader",
-          exclude: /node_modules/,
+    {
+        entry: './src/index.ts',
+        output: {
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'index.mjs',
+            library: { type: 'module' },
+            clean: true,
         },
-      ],
-    },
-  },
-  {
-    entry: "./src/index.ts",
-    output: {
-      path: path.resolve(__dirname, "dist"),
-      filename: "index.cjs",
-      library: { type: "commonjs2" },
-    },
-    resolve: {
-      extensions: [".ts", ".tsx", ".js"],
-      extensionAlias: {
-        ".js": [".ts", ".tsx", ".js"],
-      },
-    },
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          use: "builtin:swc-loader",
-          exclude: /node_modules/,
+        experiments: { outputModule: true },
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js'],
+            extensionAlias: {
+                '.js': ['.ts', '.tsx', '.js'],
+            },
         },
-      ],
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    use: 'builtin:swc-loader',
+                    exclude: /node_modules/,
+                },
+            ],
+        },
     },
-  },
-]);
+    {
+        entry: './src/index.ts',
+        output: {
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'index.cjs',
+            library: { type: 'commonjs2' },
+        },
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js'],
+            extensionAlias: {
+                '.js': ['.ts', '.tsx', '.js'],
+            },
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    use: 'builtin:swc-loader',
+                    exclude: /node_modules/,
+                },
+            ],
+        },
+    },
+])

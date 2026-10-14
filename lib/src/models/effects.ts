@@ -1,4 +1,3 @@
-
 export type EffectType = 'noise' | 'vignette' | 'grain' | 'glow'
 export type EffectOptions = NoiseOptions | VignetteOptions | GrainOptions | GlowOptions
 export type NoiseType = 'turbulence' | 'fractalNoise'
@@ -13,12 +12,11 @@ export interface NoiseOptions {
 }
 
 export interface VignetteOptions {
-    color?: string,
-    intensity?: number,
-    spread?: number,
+    color?: string
+    intensity?: number
+    spread?: number
     backgroundSize?: string
 }
-
 
 export interface GrainOptions {
     intensity?: number

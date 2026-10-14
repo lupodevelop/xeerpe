@@ -1,5 +1,5 @@
 :root {
-    --accent: #5EB847;
+    --accent: #5eb847;
     --accent-rgb: 94, 184, 71;
 
     --text-strong: #ffffff;
@@ -27,7 +27,8 @@
     --radius-pill: 999px;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     height: 100dvh;
     width: 100%;
@@ -124,7 +125,7 @@ figure {
     header,
     aside,
     .skip-link,
-    nav[aria-label="Guide pagination"] {
+    nav[aria-label='Guide pagination'] {
         display: none !important;
     }
 

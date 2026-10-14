@@ -1,4 +1,4 @@
-import {CSSProperties, ReactNode} from "react";
+import { CSSProperties, ReactNode } from 'react'
 
 export type ContextScene = 'hero' | 'card' | 'button' | 'page'
 

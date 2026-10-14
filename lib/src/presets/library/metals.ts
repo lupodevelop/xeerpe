@@ -1,13 +1,11 @@
-import {PresetConfig} from "../../models/index.ts";
+import { PresetConfig } from '../../models/index.ts'
 
 export const metalPresets: Record<string, PresetConfig> = {
-    'gold': (builder) => {
+    gold: (builder) => {
         builder
             .meshGradient({
                 background: 'transparent',
-                layers: [
-                    { position: '28% 22%', from: '#fff6d655', to: 'transparent', colorToPosition: '45%' }
-                ]
+                layers: [{ position: '28% 22%', from: '#fff6d655', to: 'transparent', colorToPosition: '45%' }],
             })
             .linearGradient({
                 angle: '120deg',
@@ -20,10 +18,10 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#8f6517', position: '61%' },
                     { color: '#c99a37', position: '77%' },
                     { color: '#f2d784', position: '89%' },
-                    { color: '#a77b22', position: '100%' }
-                ]
+                    { color: '#a77b22', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.8 });
+            .grain({ intensity: 0.8 })
     },
     'antique-gold': (builder) => {
         builder
@@ -37,19 +35,17 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#8c6c2e', position: '55%' },
                     { color: '#4f3a14', position: '71%' },
                     { color: '#9a7a38', position: '87%' },
-                    { color: '#5c4418', position: '100%' }
-                ]
+                    { color: '#5c4418', position: '100%' },
+                ],
             })
             .grain({ intensity: 1.4 })
-            .vignette({ color: '#1a1004', intensity: 0.55, spread: 0.5 });
+            .vignette({ color: '#1a1004', intensity: 0.55, spread: 0.5 })
     },
     'rose-gold': (builder) => {
         builder
             .meshGradient({
                 background: 'transparent',
-                layers: [
-                    { position: '28% 22%', from: '#fff1ea55', to: 'transparent', colorToPosition: '45%' }
-                ]
+                layers: [{ position: '28% 22%', from: '#fff1ea55', to: 'transparent', colorToPosition: '45%' }],
             })
             .linearGradient({
                 angle: '120deg',
@@ -62,10 +58,10 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#9a5a4b', position: '61%' },
                     { color: '#c98a7a', position: '77%' },
                     { color: '#f4cdbf', position: '89%' },
-                    { color: '#a8695a', position: '100%' }
-                ]
+                    { color: '#a8695a', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.8 });
+            .grain({ intensity: 0.8 })
     },
     'white-gold': (builder) => {
         builder
@@ -79,18 +75,16 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#d8d1bd', position: '51%' },
                     { color: '#a39c88', position: '65%' },
                     { color: '#e6e0cf', position: '83%' },
-                    { color: '#b5ae9b', position: '100%' }
-                ]
+                    { color: '#b5ae9b', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.6 });
+            .grain({ intensity: 0.6 })
     },
-    'champagne': (builder) => {
+    champagne: (builder) => {
         builder
             .meshGradient({
                 background: 'transparent',
-                layers: [
-                    { position: '70% 30%', from: '#ffffff66', to: 'transparent', colorToPosition: '35%' }
-                ]
+                layers: [{ position: '70% 30%', from: '#ffffff66', to: 'transparent', colorToPosition: '35%' }],
             })
             .linearGradient({
                 angle: '115deg',
@@ -102,10 +96,10 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#e2cfa8', position: '54%' },
                     { color: '#b49b72', position: '71%' },
                     { color: '#efe0c2', position: '89%' },
-                    { color: '#c4ad84', position: '100%' }
-                ]
+                    { color: '#c4ad84', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.7 });
+            .grain({ intensity: 0.7 })
     },
     'gold-leaf': (builder) => {
         builder
@@ -115,10 +109,10 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { position: '12% 18%', from: '#e2b84fb3', to: 'transparent', colorToPosition: '55%' },
                     { position: '48% 48%', from: '#fff8e6', to: 'transparent', colorToPosition: '45%' },
                     { position: '92% 85%', from: '#cf9f35a6', to: 'transparent', colorToPosition: '55%' },
-                    { position: '80% 12%', from: '#f0d488aa', to: 'transparent', colorToPosition: '45%' }
-                ]
+                    { position: '80% 12%', from: '#f0d488aa', to: 'transparent', colorToPosition: '45%' },
+                ],
             })
-            .grain({ intensity: 1.2 });
+            .grain({ intensity: 1.2 })
     },
     'black-gold': (builder) => {
         builder
@@ -131,26 +125,24 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#f3d27a99', position: '49%' },
                     { color: '#b8862b55', position: '56%' },
                     { color: '#00000000', position: '68%' },
-                    { color: '#00000000', position: '100%' }
-                ]
+                    { color: '#00000000', position: '100%' },
+                ],
             })
             .meshGradient({
                 background: 'transparent',
-                layers: [
-                    { position: '30% 30%', from: '#d4a23744', to: 'transparent', colorToPosition: '55%' }
-                ]
+                layers: [{ position: '30% 30%', from: '#d4a23744', to: 'transparent', colorToPosition: '55%' }],
             })
             .linearGradient({
                 angle: '135deg',
                 colors: [
                     { color: '#14100a', position: '0%' },
                     { color: '#0a0805', position: '55%' },
-                    { color: '#17120a', position: '100%' }
-                ]
+                    { color: '#17120a', position: '100%' },
+                ],
             })
-            .grain({ intensity: 1.4 });
+            .grain({ intensity: 1.4 })
     },
-    'silver': (builder) => {
+    silver: (builder) => {
         builder
             .linearGradient({
                 angle: '120deg',
@@ -163,18 +155,16 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#7c8288', position: '61%' },
                     { color: '#b9bec3', position: '77%' },
                     { color: '#eef0f2', position: '89%' },
-                    { color: '#8d9399', position: '100%' }
-                ]
+                    { color: '#8d9399', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.7 });
+            .grain({ intensity: 0.7 })
     },
-    'platinum': (builder) => {
+    platinum: (builder) => {
         builder
             .meshGradient({
                 background: 'transparent',
-                layers: [
-                    { position: '30% 25%', from: '#ffffff99', to: 'transparent', colorToPosition: '40%' }
-                ]
+                layers: [{ position: '30% 25%', from: '#ffffff99', to: 'transparent', colorToPosition: '40%' }],
             })
             .linearGradient({
                 angle: '135deg',
@@ -184,27 +174,26 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#f7f8f9', position: '40%' },
                     { color: '#cfd2d6', position: '58%' },
                     { color: '#eceef0', position: '78%' },
-                    { color: '#b2b6bb', position: '100%' }
-                ]
+                    { color: '#b2b6bb', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.5 });
+            .grain({ intensity: 0.5 })
     },
-    'chrome': (builder) => {
-        builder
-            .linearGradient({
-                angle: '180deg',
-                colors: [
-                    { color: '#e9eef3', position: '0%' },
-                    { color: '#ffffff', position: '28%' },
-                    { color: '#9ba4ad', position: '48%' },
-                    { color: '#2b3036', position: '50%' },
-                    { color: '#5f6770', position: '62%' },
-                    { color: '#d7dde2', position: '85%' },
-                    { color: '#f4f6f8', position: '100%' }
-                ]
-            });
+    chrome: (builder) => {
+        builder.linearGradient({
+            angle: '180deg',
+            colors: [
+                { color: '#e9eef3', position: '0%' },
+                { color: '#ffffff', position: '28%' },
+                { color: '#9ba4ad', position: '48%' },
+                { color: '#2b3036', position: '50%' },
+                { color: '#5f6770', position: '62%' },
+                { color: '#d7dde2', position: '85%' },
+                { color: '#f4f6f8', position: '100%' },
+            ],
+        })
     },
-    'steel': (builder) => {
+    steel: (builder) => {
         builder
             .linearGradient({
                 angle: '100deg',
@@ -214,12 +203,12 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#d5dadf', position: '40%' },
                     { color: '#9ea5ac', position: '55%' },
                     { color: '#c4cad0', position: '75%' },
-                    { color: '#848b92', position: '100%' }
-                ]
+                    { color: '#848b92', position: '100%' },
+                ],
             })
-            .noise({ octaves: 3, opacity: 0.12, scale: 0.9 });
+            .noise({ octaves: 3, opacity: 0.12, scale: 0.9 })
     },
-    'titanium': (builder) => {
+    titanium: (builder) => {
         builder
             .linearGradient({
                 angle: '125deg',
@@ -230,12 +219,12 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#8a929c', position: '51%' },
                     { color: '#5a616a', position: '69%' },
                     { color: '#a9b0b8', position: '87%' },
-                    { color: '#4b525a', position: '100%' }
-                ]
+                    { color: '#4b525a', position: '100%' },
+                ],
             })
-            .grain({ intensity: 1 });
+            .grain({ intensity: 1 })
     },
-    'gunmetal': (builder) => {
+    gunmetal: (builder) => {
         builder
             .linearGradient({
                 angle: '125deg',
@@ -245,12 +234,12 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#5a6169', position: '41%' },
                     { color: '#2a2f35', position: '58%' },
                     { color: '#40464d', position: '80%' },
-                    { color: '#1b1e22', position: '100%' }
-                ]
+                    { color: '#1b1e22', position: '100%' },
+                ],
             })
-            .grain({ intensity: 1.3 });
+            .grain({ intensity: 1.3 })
     },
-    'bronze': (builder) => {
+    bronze: (builder) => {
         builder
             .linearGradient({
                 angle: '120deg',
@@ -262,12 +251,12 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#a06a35', position: '53%' },
                     { color: '#5c3518', position: '71%' },
                     { color: '#9c6a3a', position: '89%' },
-                    { color: '#4a2c14', position: '100%' }
-                ]
+                    { color: '#4a2c14', position: '100%' },
+                ],
             })
-            .grain({ intensity: 1 });
+            .grain({ intensity: 1 })
     },
-    'copper': (builder) => {
+    copper: (builder) => {
         builder
             .linearGradient({
                 angle: '120deg',
@@ -279,12 +268,12 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#c46a3e', position: '53%' },
                     { color: '#7e3519', position: '71%' },
                     { color: '#c97a4f', position: '89%' },
-                    { color: '#6b2d16', position: '100%' }
-                ]
+                    { color: '#6b2d16', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.9 });
+            .grain({ intensity: 0.9 })
     },
-    'brass': (builder) => {
+    brass: (builder) => {
         builder
             .linearGradient({
                 angle: '120deg',
@@ -296,12 +285,12 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#b3a048', position: '53%' },
                     { color: '#665a1e', position: '71%' },
                     { color: '#ab9a4c', position: '89%' },
-                    { color: '#574a18', position: '100%' }
-                ]
+                    { color: '#574a18', position: '100%' },
+                ],
             })
-            .grain({ intensity: 1 });
+            .grain({ intensity: 1 })
     },
-    'mercury': (builder) => {
+    mercury: (builder) => {
         builder
             .linearGradient({
                 angle: '160deg',
@@ -309,8 +298,8 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#ffffff00', position: '0%' },
                     { color: '#ffffff00', position: '45%' },
                     { color: '#ffffff55', position: '52%' },
-                    { color: '#ffffff00', position: '60%' }
-                ]
+                    { color: '#ffffff00', position: '60%' },
+                ],
             })
             .meshGradient({
                 background: '#9aa1a8',
@@ -318,11 +307,11 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { position: '22% 22%', from: '#ffffff', to: 'transparent', colorToPosition: '48%' },
                     { position: '82% 18%', from: '#eef1f4cc', to: 'transparent', colorToPosition: '40%' },
                     { position: '78% 88%', from: '#3f454bcc', to: 'transparent', colorToPosition: '55%' },
-                    { position: '8% 100%', from: '#5a6067aa', to: 'transparent', colorToPosition: '45%' }
-                ]
-            });
+                    { position: '8% 100%', from: '#5a6067aa', to: 'transparent', colorToPosition: '45%' },
+                ],
+            })
     },
-    'holographic': (builder) => {
+    holographic: (builder) => {
         builder
             .linearGradient({
                 angle: '160deg',
@@ -330,15 +319,15 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#ffffff00', position: '0%' },
                     { color: '#ffffff00', position: '20%' },
                     { color: '#ffffff55', position: '48%' },
-                    { color: '#ffffff00', position: '75%' }
-                ]
+                    { color: '#ffffff00', position: '75%' },
+                ],
             })
             .meshGradient({
                 background: 'transparent',
                 layers: [
                     { position: '25% 25%', from: '#ffffffcc', to: 'transparent', colorToPosition: '40%' },
-                    { position: '80% 80%', from: '#ffffff99', to: 'transparent', colorToPosition: '40%' }
-                ]
+                    { position: '80% 80%', from: '#ffffff99', to: 'transparent', colorToPosition: '40%' },
+                ],
             })
             .linearGradient({
                 angle: '115deg',
@@ -349,23 +338,22 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { color: '#fff3b8', position: '55%' },
                     { color: '#ffc2d6', position: '72%' },
                     { color: '#cdbfff', position: '88%' },
-                    { color: '#b4f0ff', position: '100%' }
-                ]
+                    { color: '#b4f0ff', position: '100%' },
+                ],
             })
-            .grain({ intensity: 0.6 });
+            .grain({ intensity: 0.6 })
     },
-    'iridescent': (builder) => {
-        builder
-            .meshGradient({
-                background: '#eef0f5',
-                layers: [
-                    { position: '15% 20%', from: '#ffc8e6cc', to: 'transparent', colorToPosition: '55%' },
-                    { position: '85% 25%', from: '#c4f5e4cc', to: 'transparent', colorToPosition: '55%' },
-                    { position: '70% 90%', from: '#d6ccffcc', to: 'transparent', colorToPosition: '55%' },
-                    { position: '20% 85%', from: '#ffe1c4cc', to: 'transparent', colorToPosition: '50%' },
-                    { position: '50% 45%', from: '#ffffffcc', to: 'transparent', colorToPosition: '35%' }
-                ]
-            });
+    iridescent: (builder) => {
+        builder.meshGradient({
+            background: '#eef0f5',
+            layers: [
+                { position: '15% 20%', from: '#ffc8e6cc', to: 'transparent', colorToPosition: '55%' },
+                { position: '85% 25%', from: '#c4f5e4cc', to: 'transparent', colorToPosition: '55%' },
+                { position: '70% 90%', from: '#d6ccffcc', to: 'transparent', colorToPosition: '55%' },
+                { position: '20% 85%', from: '#ffe1c4cc', to: 'transparent', colorToPosition: '50%' },
+                { position: '50% 45%', from: '#ffffffcc', to: 'transparent', colorToPosition: '35%' },
+            ],
+        })
     },
     'oil-slick': (builder) => {
         builder
@@ -376,9 +364,9 @@ export const metalPresets: Record<string, PresetConfig> = {
                     { position: '78% 15%', from: '#22c3b5bb', to: 'transparent', colorToPosition: '55%' },
                     { position: '50% 60%', from: '#e3bb4666', to: 'transparent', colorToPosition: '30%' },
                     { position: '95% 90%', from: '#6248e6bb', to: 'transparent', colorToPosition: '58%' },
-                    { position: '8% 95%', from: '#2bd36b88', to: 'transparent', colorToPosition: '50%' }
-                ]
+                    { position: '8% 95%', from: '#2bd36b88', to: 'transparent', colorToPosition: '50%' },
+                ],
             })
-            .grain({ intensity: 1.2 });
+            .grain({ intensity: 1.2 })
     },
-};
+}

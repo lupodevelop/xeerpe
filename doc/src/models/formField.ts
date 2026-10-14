@@ -1,7 +1,7 @@
-import {ReactNode} from "react";
+import { ReactNode } from 'react'
 
 export interface FormFieldProps {
-    label: string;
-    htmlFor?: string;
-    children: ReactNode;
+    label: string
+    htmlFor?: string
+    children: ReactNode
 }

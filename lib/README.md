@@ -44,11 +44,11 @@ npm install xeerpe
 import { Builder } from 'xeerpe'
 
 const style = new Builder()
-    .radialGradient({ from: '#FF7A18', to: 'transparent', position: '75% 25%' })
-    .linearGradient({ from: '#1a0b05', to: '#060302', angle: '160deg' })
-    .dots({ color: '#FF7A18', size: '24px', opacity: 0.14 })
-    .grain({ intensity: 2 })
-    .toStyle()
+  .radialGradient({ from: '#FF7A18', to: 'transparent', position: '75% 25%' })
+  .linearGradient({ from: '#1a0b05', to: '#060302', angle: '160deg' })
+  .dots({ color: '#FF7A18', size: '24px', opacity: 0.14 })
+  .grain({ intensity: 2 })
+  .toStyle()
 ```
 
 The result is a plain object, so it works anywhere that accepts inline styles:
@@ -75,23 +75,21 @@ import 'xeerpe/animations.css'
 
 ```ts
 const style = new Builder()
-    .meshGradient({
-        background: '#04121c',
-        layers: [
-            { position: '15% 25%', from: 'rgba(16,185,129,0.8)', to: 'transparent', colorToPosition: '60%' },
-            { position: '85% 30%', from: 'rgba(56,189,248,0.65)', to: 'transparent', colorToPosition: '55%' },
-        ],
-    })
-    .aurora({ duration: '8s' })
-    .toStyle()
+  .meshGradient({
+    background: '#04121c',
+    layers: [
+      { position: '15% 25%', from: 'rgba(16,185,129,0.8)', to: 'transparent', colorToPosition: '60%' },
+      { position: '85% 30%', from: 'rgba(56,189,248,0.65)', to: 'transparent', colorToPosition: '55%' },
+    ],
+  })
+  .aurora({ duration: '8s' })
+  .toStyle()
 ```
 
 ### Gradient text
 
 ```ts
-const textStyle = new Builder()
-    .linearGradient({ from: '#5EB847', to: '#BFD43F', angle: '135deg' })
-    .toTextStyle()
+const textStyle = new Builder().linearGradient({ from: '#5EB847', to: '#BFD43F', angle: '135deg' }).toTextStyle()
 ```
 
 ## Features

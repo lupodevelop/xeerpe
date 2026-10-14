@@ -1,5 +1,5 @@
-import {HTMLAttributes} from "react";
+import { HTMLAttributes } from 'react'
 
 export interface PanelProps extends HTMLAttributes<HTMLElement> {
-    title?: string;
+    title?: string
 }

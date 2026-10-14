@@ -18,14 +18,16 @@
     font-size: 0.85rem;
     color: var(--text-muted);
     cursor: pointer;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
 }
 
 .tab:hover {
     color: var(--text-strong);
 }
 
-.tab[aria-selected="true"] {
+.tab[aria-selected='true'] {
     background: rgba(var(--accent-rgb), 0.18);
     color: var(--accent);
     font-weight: 500;

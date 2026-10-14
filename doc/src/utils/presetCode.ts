@@ -6,11 +6,11 @@ const libraryDir = path.join(process.cwd(), '..', 'lib', 'src', 'presets', 'libr
 let sources: Promise<string[]> | undefined
 
 const readLibrary = () => {
-    sources ??= fs.readdir(libraryDir)
-        .then((files) => Promise.all(
-            files.filter((file) => file.endsWith('.ts'))
-                .map((file) => fs.readFile(path.join(libraryDir, file), 'utf-8')),
-        ))
+    sources ??= fs
+        .readdir(libraryDir)
+        .then((files) =>
+            Promise.all(files.filter((file) => file.endsWith('.ts')).map((file) => fs.readFile(path.join(libraryDir, file), 'utf-8'))),
+        )
         .catch(() => [])
     return sources
 }
@@ -18,12 +18,12 @@ const readLibrary = () => {
 const toChain = (body: string) => {
     const lines = body.split('\n')
     const indent = Math.min(...lines.filter((line) => line.trim()).map((line) => line.match(/^ */)![0].length))
-    const code = lines.map((line) => line.slice(indent)).join('\n').trim()
+    const code = lines
+        .map((line) => line.slice(indent))
+        .join('\n')
+        .trim()
 
-    return code
-        .replace(/^builder\b/m, 'new Builder()')
-        .replace(/;\s*$/, '')
-        + '\n    .toStyle()'
+    return code.replace(/^builder\b/m, 'new Builder()').replace(/;\s*$/, '') + '\n    .toStyle()'
 }
 
 export const getPresetCode = async (name: string): Promise<string | undefined> => {

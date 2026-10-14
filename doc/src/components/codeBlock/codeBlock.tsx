@@ -1,6 +1,6 @@
 'use client'
 
-import {useRef, useState} from 'react'
+import { useRef, useState } from 'react'
 import classes from './codeBlock.module.css'
 
 const CodeBlock = (props: React.ComponentProps<'pre'>) => {
@@ -16,15 +16,12 @@ const CodeBlock = (props: React.ComponentProps<'pre'>) => {
 
     return (
         <div className={classes.wrapper}>
-            <button
-                type="button"
-                onClick={handleCopy}
-                className={classes.copyBtn}
-                aria-label={copied ? 'Code copied' : 'Copy code'}
-            >
+            <button type="button" onClick={handleCopy} className={classes.copyBtn} aria-label={copied ? 'Code copied' : 'Copy code'}>
                 {copied ? '✓ Copied' : 'Copy'}
             </button>
-            <span role="status" className="sr-only">{copied ? 'Code copied to clipboard' : ''}</span>
+            <span role="status" className="sr-only">
+                {copied ? 'Code copied to clipboard' : ''}
+            </span>
             <pre ref={preRef} tabIndex={0} {...props} />
         </div>
     )

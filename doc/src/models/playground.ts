@@ -1,4 +1,4 @@
-import {Dispatch, ReactNode} from "react";
+import { Dispatch, ReactNode } from 'react'
 
 export type Primitive = string | number | boolean
 export type Params = Record<string, Primitive>

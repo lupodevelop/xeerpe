@@ -1,13 +1,16 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import {demos} from "@/src/data/examples.ts";
+import { demos } from '@/src/data/examples.ts'
 
 let source: Promise<string> | undefined
 
 const dedent = (code: string) => {
     const lines = code.split('\n')
     const indent = Math.min(
-        ...lines.slice(1).filter((line) => line.trim()).map((line) => line.match(/^ */)![0].length),
+        ...lines
+            .slice(1)
+            .filter((line) => line.trim())
+            .map((line) => line.match(/^ */)![0].length),
     )
     return lines.map((line, i) => (i === 0 ? line : line.slice(Number.isFinite(indent) ? indent - 4 : 0))).join('\n')
 }

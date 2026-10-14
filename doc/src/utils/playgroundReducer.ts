@@ -1,14 +1,6 @@
-import {findMethod} from '@/src/data/playgroundRegistry.ts'
-import {
-    Layer,
-    Method,
-    Params,
-    PlaygroundAction,
-    PlaygroundHistory,
-    PlaygroundState,
-    Primitive,
-} from '@/src/models/playground.ts'
-import {createLayer, createPoint, emptyState} from '@/src/utils/playground.ts'
+import { findMethod } from '@/src/data/playgroundRegistry.ts'
+import { Layer, Method, Params, PlaygroundAction, PlaygroundHistory, PlaygroundState, Primitive } from '@/src/models/playground.ts'
+import { createLayer, createPoint, emptyState } from '@/src/utils/playground.ts'
 
 const HISTORY_LIMIT = 100
 
@@ -20,12 +12,12 @@ export const initialHistory: PlaygroundHistory = {
 }
 
 const updateLayer = (state: PlaygroundState, id: string, update: (layer: Layer) => Layer): PlaygroundState => ({
-    layers: state.layers.map((layer) => layer.id === id ? update(layer) : layer),
+    layers: state.layers.map((layer) => (layer.id === id ? update(layer) : layer)),
 })
 
 const withExclusions = (layer: Layer, key: string, value: Primitive): Params => {
     const fields = findMethod(layer.method)?.fields ?? []
-    const excluded = value === '' ? [] : fields.find((field) => field.key === key)?.excludes ?? []
+    const excluded = value === '' ? [] : (fields.find((field) => field.key === key)?.excludes ?? [])
 
     return {
         ...Object.fromEntries(Object.entries(layer.params).filter(([name]) => !excluded.includes(name))),
@@ -33,11 +25,11 @@ const withExclusions = (layer: Layer, key: string, value: Primitive): Params => 
     }
 }
 
-const reduceState =(state: PlaygroundState, action: PlaygroundAction): PlaygroundState => {
+const reduceState = (state: PlaygroundState, action: PlaygroundAction): PlaygroundState => {
     switch (action.type) {
         case 'ADD_LAYER': {
             const method = findMethod(action.method) as Method
-            return {layers: [...state.layers, createLayer(method, action.id)]}
+            return { layers: [...state.layers, createLayer(method, action.id)] }
         }
         case 'UPDATE_PARAMS':
             return updateLayer(state, action.id, (layer) => ({
@@ -52,9 +44,7 @@ const reduceState =(state: PlaygroundState, action: PlaygroundAction): Playgroun
         case 'UPDATE_POINT':
             return updateLayer(state, action.id, (layer) => ({
                 ...layer,
-                points: layer.points.map((point, index) =>
-                    index === action.index ? {...point, [action.key]: action.value} : point
-                ),
+                points: layer.points.map((point, index) => (index === action.index ? { ...point, [action.key]: action.value } : point)),
             }))
         case 'REMOVE_POINT':
             return updateLayer(state, action.id, (layer) => ({
@@ -62,14 +52,14 @@ const reduceState =(state: PlaygroundState, action: PlaygroundAction): Playgroun
                 points: layer.points.filter((_, index) => index !== action.index),
             }))
         case 'REMOVE':
-            return {layers: state.layers.filter((layer) => layer.id !== action.id)}
+            return { layers: state.layers.filter((layer) => layer.id !== action.id) }
         case 'MOVE': {
             const from = state.layers.findIndex((layer) => layer.id === action.id)
             const to = from + action.direction
             if (from < 0 || to < 0 || to >= state.layers.length) return state
             const layers = [...state.layers]
             ;[layers[from], layers[to]] = [layers[to], layers[from]]
-            return {layers}
+            return { layers }
         }
         case 'DUPLICATE': {
             const index = state.layers.findIndex((layer) => layer.id === action.id)
@@ -78,15 +68,15 @@ const reduceState =(state: PlaygroundState, action: PlaygroundAction): Playgroun
             const copy: Layer = {
                 ...source,
                 id: action.newId,
-                params: {...source.params},
-                points: source.points.map((point) => ({...point})),
+                params: { ...source.params },
+                points: source.points.map((point) => ({ ...point })),
             }
             const layers = [...state.layers]
             layers.splice(index + 1, 0, copy)
-            return {layers}
+            return { layers }
         }
         case 'TOGGLE_VISIBILITY':
-            return updateLayer(state, action.id, (layer) => ({...layer, visible: !layer.visible}))
+            return updateLayer(state, action.id, (layer) => ({ ...layer, visible: !layer.visible }))
         case 'LOAD':
             return action.state
         case 'RESET':
@@ -131,7 +121,7 @@ export const playgroundReducer = (history: PlaygroundHistory, action: Playground
     const key = coalesceKey(action)
 
     if (key && key === history.lastKey) {
-        return {...history, present}
+        return { ...history, present }
     }
 
     return {

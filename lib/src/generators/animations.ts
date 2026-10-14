@@ -1,4 +1,4 @@
-import { AnimationOptions, AnimationType, BuilderLayer, CSSProperties } from "../models/index.ts";
+import { AnimationOptions, AnimationType, BuilderLayer, CSSProperties } from '../models/index.ts'
 
 export const generatePulseAnimation = (options: AnimationOptions): string => {
     const { duration = '4s', easing = 'ease-in-out', direction = 'alternate', iterationCount = 'infinite' } = options
@@ -47,16 +47,26 @@ export const generateDriftAnimation = (options: AnimationOptions): string => {
 
 export const buildAnimationByType = (type: AnimationType, options: AnimationOptions) => {
     switch (type) {
-        case 'pulse':   return generatePulseAnimation(options)
-        case 'rotate':  return generateRotateAnimation(options)
-        case 'breathe': return generateBreatheAnimation(options)
-        case 'aurora':  return generateAuroraAnimation(options)
-        case 'shimmer': return generateShimmerAnimation(options)
-        case 'liquid':  return generateLiquidAnimation(options)
-        case 'plasma':  return generatePlasmaAnimation(options)
-        case 'float':   return generateFloatAnimation(options)
-        case 'drift':   return generateDriftAnimation(options)
-        default: throw new Error(`Unknown animation type: ${type}`)
+        case 'pulse':
+            return generatePulseAnimation(options)
+        case 'rotate':
+            return generateRotateAnimation(options)
+        case 'breathe':
+            return generateBreatheAnimation(options)
+        case 'aurora':
+            return generateAuroraAnimation(options)
+        case 'shimmer':
+            return generateShimmerAnimation(options)
+        case 'liquid':
+            return generateLiquidAnimation(options)
+        case 'plasma':
+            return generatePlasmaAnimation(options)
+        case 'float':
+            return generateFloatAnimation(options)
+        case 'drift':
+            return generateDriftAnimation(options)
+        default:
+            throw new Error(`Unknown animation type: ${type}`)
     }
 }
 
@@ -68,7 +78,7 @@ export const buildAnimationLayer = (type: AnimationType, options: AnimationOptio
     }
 
     const properties: CSSProperties = {
-        animation: buildAnimationByType(type, options)
+        animation: buildAnimationByType(type, options),
     }
 
     return { type: 'animation', properties, animationType: type, target }

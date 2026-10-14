@@ -1,4 +1,4 @@
-import {CSSProperties} from "react";
+import { CSSProperties } from 'react'
 
 const toKebab = (key: string) => {
     if (key.startsWith('--')) return key
@@ -7,7 +7,11 @@ const toKebab = (key: string) => {
 }
 
 const toClassName = (name: string) =>
-    name.trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '')
+    name
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]+/g, '-')
+        .replace(/^-+|-+$/g, '')
 
 export const styleToCss = (style: CSSProperties, className?: string) => {
     const declarations = Object.entries(style)

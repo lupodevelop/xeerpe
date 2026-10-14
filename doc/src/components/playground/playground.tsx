@@ -1,8 +1,8 @@
 'use client'
 
-import {useEffect, useMemo, useReducer, useRef, useState} from 'react'
-import {findMethod} from '@/src/data/playgroundRegistry.ts'
-import {PanelTab, PanelTabItem, PlaygroundProps, PlaygroundState} from '@/src/models/playground.ts'
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { findMethod } from '@/src/data/playgroundRegistry.ts'
+import { PanelTab, PanelTabItem, PlaygroundProps, PlaygroundState } from '@/src/models/playground.ts'
 import {
     buildFromState,
     createId,
@@ -13,7 +13,7 @@ import {
     serializeToSnippet,
     toCss,
 } from '@/src/utils/playground.ts'
-import {initialHistory, playgroundReducer} from '@/src/utils/playgroundReducer.ts'
+import { initialHistory, playgroundReducer } from '@/src/utils/playgroundReducer.ts'
 import Button from '@cmp/buttons/button.tsx'
 import Panel from '@cmp/panel/panel.tsx'
 import PresetSelect from '@cmp/presetSelect/presetSelect.tsx'
@@ -27,14 +27,14 @@ import ContextModal from '@cmp/contextPreview/contextModal.tsx'
 import classes from './playground.module.css'
 
 const panelTabs: PanelTabItem[] = [
-    {id: 'layers', label: 'Layers'},
-    {id: 'controls', label: 'Controls'},
-    {id: 'code', label: 'Code'},
+    { id: 'layers', label: 'Layers' },
+    { id: 'controls', label: 'Controls' },
+    { id: 'code', label: 'Code' },
 ]
 
 const HASH_PREFIX = '#s='
 
-const Playground = ({keyframes}: PlaygroundProps) => {
+const Playground = ({ keyframes }: PlaygroundProps) => {
     const [history, dispatch] = useReducer(playgroundReducer, initialHistory)
     const [selectedId, setSelectedId] = useState<string>()
     const [panel, setPanel] = useState<PanelTab>('layers')
@@ -53,7 +53,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
     useEffect(() => {
         if (window.location.hash.startsWith(HASH_PREFIX)) {
             const decoded = decodeState(window.location.hash.slice(HASH_PREFIX.length))
-            if (decoded) dispatch({type: 'LOAD', state: decoded})
+            if (decoded) dispatch({ type: 'LOAD', state: decoded })
         }
         hydrated.current = true
 
@@ -63,7 +63,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
             if (!decoded) return
 
             setPreset(undefined)
-            dispatch({type: 'LOAD', state: decoded})
+            dispatch({ type: 'LOAD', state: decoded })
         }
 
         window.addEventListener('hashchange', onHashChange)
@@ -83,13 +83,13 @@ const Playground = ({keyframes}: PlaygroundProps) => {
 
     function handleAdd(method: string) {
         const id = createId()
-        dispatch({type: 'ADD_LAYER', id, method})
+        dispatch({ type: 'ADD_LAYER', id, method })
         setSelectedId(id)
         setPanel('controls')
     }
 
     function load(next: PlaygroundState) {
-        dispatch({type: 'LOAD', state: next})
+        dispatch({ type: 'LOAD', state: next })
         setSelectedId(next.layers[next.layers.length - 1]?.id)
     }
 
@@ -105,7 +105,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
 
     function handleReset() {
         setPreset(undefined)
-        dispatch({type: 'RESET'})
+        dispatch({ type: 'RESET' })
     }
 
     async function handleShare() {
@@ -122,23 +122,20 @@ const Playground = ({keyframes}: PlaygroundProps) => {
     return (
         <div className={classes.root}>
             <div className={classes.toolbar}>
-                <label className="sr-only" htmlFor="playground-preset">Start from a preset</label>
-                <PresetSelect
-                    id="playground-preset"
-                    value={preset}
-                    className={classes.preset}
-                    onSelect={handlePreset}
-                />
+                <label className="sr-only" htmlFor="playground-preset">
+                    Start from a preset
+                </label>
+                <PresetSelect id="playground-preset" value={preset} className={classes.preset} onSelect={handlePreset} />
 
                 <Button variant="accent" size="sm" onClick={handleRandom}>
                     ✦ Surprise me
                 </Button>
 
                 <div className={classes.toolbarActions}>
-                    <Button size="sm" disabled={!history.past.length} onClick={() => dispatch({type: 'UNDO'})}>
+                    <Button size="sm" disabled={!history.past.length} onClick={() => dispatch({ type: 'UNDO' })}>
                         Undo
                     </Button>
-                    <Button size="sm" disabled={!history.future.length} onClick={() => dispatch({type: 'REDO'})}>
+                    <Button size="sm" disabled={!history.future.length} onClick={() => dispatch({ type: 'REDO' })}>
                         Redo
                     </Button>
                     <Button size="sm" disabled={!state.layers.length} onClick={handleReset}>
@@ -147,7 +144,9 @@ const Playground = ({keyframes}: PlaygroundProps) => {
                     <Button size="sm" disabled={!state.layers.length} onClick={handleShare}>
                         {shared ? '✓ Link copied' : 'Share'}
                     </Button>
-                    <span role="status" className="sr-only">{shared ? 'Link copied to clipboard' : ''}</span>
+                    <span role="status" className="sr-only">
+                        {shared ? 'Link copied to clipboard' : ''}
+                    </span>
                 </div>
             </div>
 
@@ -160,12 +159,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
             />
 
             <div className={classes.side}>
-                <Panel
-                    title="Layers"
-                    className={classes.panel}
-                    data-panel="layers"
-                    data-active={panel === 'layers'}
-                >
+                <Panel title="Layers" className={classes.panel} data-panel="layers" data-active={panel === 'layers'}>
                     <LayerList
                         layers={state.layers}
                         selectedId={selected?.id}
@@ -197,11 +191,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
 
             <div className={classes.stage}>
                 <section className={classes.previewPanel} aria-label="Preview">
-                    <Preview
-                        style={result.style}
-                        error={result.error}
-                        empty={!state.layers.length}
-                    >
+                    <Preview style={result.style} error={result.error} empty={!state.layers.length}>
                         <Button
                             size="sm"
                             className={classes.previewAction}
@@ -222,12 +212,7 @@ const Playground = ({keyframes}: PlaygroundProps) => {
                     css={css}
                 />
 
-                <Panel
-                    aria-label="Code"
-                    className={classes.panel}
-                    data-panel="code"
-                    data-active={panel === 'code'}
-                >
+                <Panel aria-label="Code" className={classes.panel} data-panel="code" data-active={panel === 'code'}>
                     <Output snippet={snippet} css={css} />
                 </Panel>
             </div>

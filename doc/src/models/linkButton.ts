@@ -1,7 +1,7 @@
-import {ReactNode} from "react";
+import { ReactNode } from 'react'
 
 export interface LinkButtonProps {
-    href: string;
-    variant?: 'primary' | 'secondary' | 'accent';
-    children: ReactNode;
+    href: string
+    variant?: 'primary' | 'secondary' | 'accent'
+    children: ReactNode
 }

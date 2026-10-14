@@ -32,7 +32,7 @@
     text-overflow: ellipsis;
 }
 
-.triggerLabel[data-placeholder="true"] {
+.triggerLabel[data-placeholder='true'] {
     color: var(--text-muted);
 }
 
@@ -119,7 +119,7 @@
     cursor: pointer;
 }
 
-.option[data-active="true"] {
+.option[data-active='true'] {
     background: rgba(var(--accent-rgb), 0.14);
 }
 
@@ -143,7 +143,7 @@
     color: var(--text);
 }
 
-.option[data-active="true"] .name {
+.option[data-active='true'] .name {
     color: var(--text-strong);
 }
 

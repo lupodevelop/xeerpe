@@ -1,11 +1,10 @@
-import {ArticleJsonLdPage, SocialMetadataPage} from '@/src/models/site.ts'
+import { ArticleJsonLdPage, SocialMetadataPage } from '@/src/models/site.ts'
 
 export const SITE_URL = 'https://www.xeerpe.io'
 
 export const SITE_NAME = 'xeerpe'
 
-export const SITE_TITLE =
-    'xeerpe — CSS background and style builder: gradients, effects'
+export const SITE_TITLE = 'xeerpe — CSS background and style builder: gradients, effects'
 
 export const SITE_DESCRIPTION =
     'Build CSS backgrounds and styles with a chainable API: gradients, patterns, effects, filters and animations in one style object. Zero dependencies, any framework.'
@@ -26,10 +25,7 @@ export const LICENSE_URL = 'https://github.com/nicolacentonze/xeerpe/blob/main/l
 export const INDEXABLE = process.env.VERCEL_ENV === 'production'
 
 export const serializeJsonLd = (data: unknown): string =>
-    JSON.stringify(data)
-        .replace(/</g, '\\u003c')
-        .replace(/>/g, '\\u003e')
-        .replace(/&/g, '\\u0026')
+    JSON.stringify(data).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')
 
 export const softwareJsonLd = () => ({
     '@context': 'https://schema.org',
@@ -41,7 +37,8 @@ export const softwareJsonLd = () => ({
     sameAs: [GITHUB_URL, NPM_URL],
     programmingLanguage: ['TypeScript', 'JavaScript'],
     runtimePlatform: ['Node.js', 'Web Browser'],
-    keywords: 'xeerpe, css background, css style, style builder, css gradient, gradient generator, mesh gradient, background effects, text effects, animation, css-in-js, TypeScript, JavaScript',
+    keywords:
+        'xeerpe, css background, css style, style builder, css gradient, gradient generator, mesh gradient, background effects, text effects, animation, css-in-js, TypeScript, JavaScript',
     license: LICENSE_URL,
     author: {
         '@type': 'Person',
@@ -50,9 +47,7 @@ export const softwareJsonLd = () => ({
     },
 })
 
-export const articleJsonLd = (
-    page: ArticleJsonLdPage
-) => ({
+export const articleJsonLd = (page: ArticleJsonLdPage) => ({
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
     headline: page.title,
@@ -73,9 +68,7 @@ export const websiteJsonLd = () => ({
     publisher: { '@type': 'Person', name: AUTHOR_NAME, url: AUTHOR_URL },
 })
 
-export const socialMetadata = (
-    page: SocialMetadataPage
-) => ({
+export const socialMetadata = (page: SocialMetadataPage) => ({
     openGraph: {
         type: page.type ?? 'website',
         siteName: SITE_NAME,

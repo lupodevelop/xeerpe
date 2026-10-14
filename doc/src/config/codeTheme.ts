@@ -1,4 +1,4 @@
-import type {ThemeRegistration} from 'shiki'
+import type { ThemeRegistration } from 'shiki'
 
 const KEYWORD = '#f472b6'
 const METHOD = '#7fd968'
@@ -16,30 +16,24 @@ export const codeTheme: ThemeRegistration = {
     },
     tokenColors: [
         {
-            scope: [
-                'keyword.control',
-                'keyword.operator.new',
-                'keyword.operator.expression',
-                'storage.type',
-                'storage.modifier',
-            ],
-            settings: {foreground: KEYWORD},
+            scope: ['keyword.control', 'keyword.operator.new', 'keyword.operator.expression', 'storage.type', 'storage.modifier'],
+            settings: { foreground: KEYWORD },
         },
         {
             scope: ['entity.name.function', 'support.function', 'meta.function-call entity.name.function'],
-            settings: {foreground: METHOD},
+            settings: { foreground: METHOD },
         },
         {
             scope: ['string', 'string.quoted', 'punctuation.definition.string'],
-            settings: {foreground: STRING},
+            settings: { foreground: STRING },
         },
         {
             scope: ['constant.numeric', 'constant.language'],
-            settings: {foreground: NUMBER},
+            settings: { foreground: NUMBER },
         },
         {
             scope: ['comment', 'punctuation.definition.comment'],
-            settings: {foreground: COMMENT},
+            settings: { foreground: COMMENT },
         },
     ],
 }

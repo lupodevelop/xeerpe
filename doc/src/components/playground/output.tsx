@@ -1,19 +1,19 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-import {codeTheme} from '@/src/config/codeTheme.ts'
+import { useEffect, useState } from 'react'
+import { codeTheme } from '@/src/config/codeTheme.ts'
 import Button from '@cmp/buttons/button.tsx'
 import SegmentedTabs from '@cmp/segmentedTabs/segmentedTabs.tsx'
 import codeBlockClasses from '@cmp/codeBlock/codeBlock.module.css'
 import classes from './playground.module.css'
-import {HighlightedOutput, OutputProps, OutputTab, OutputTabItem} from '@/src/models/playground.ts'
+import { HighlightedOutput, OutputProps, OutputTab, OutputTabItem } from '@/src/models/playground.ts'
 
 const tabs: OutputTabItem[] = [
-    {id: 'snippet', label: 'Snippet', lang: 'ts'},
-    {id: 'css', label: 'CSS', lang: 'css'},
+    { id: 'snippet', label: 'Snippet', lang: 'ts' },
+    { id: 'css', label: 'CSS', lang: 'css' },
 ]
 
-const Output = ({snippet, css}: OutputProps) => {
+const Output = ({ snippet, css }: OutputProps) => {
     const [active, setActive] = useState<OutputTab>('snippet')
     const [copied, setCopied] = useState(false)
     const [highlighted, setHighlighted] = useState<HighlightedOutput | null>(null)
@@ -25,9 +25,9 @@ const Output = ({snippet, css}: OutputProps) => {
         let cancelled = false
 
         const timer = setTimeout(async () => {
-            const {codeToHtml} = await import('shiki')
-            const html = await codeToHtml(code, {lang: tab.lang, theme: codeTheme})
-            if (!cancelled) setHighlighted({code, html})
+            const { codeToHtml } = await import('shiki')
+            const html = await codeToHtml(code, { lang: tab.lang, theme: codeTheme })
+            if (!cancelled) setHighlighted({ code, html })
         }, 150)
 
         return () => {
@@ -59,7 +59,9 @@ const Output = ({snippet, css}: OutputProps) => {
                 <Button size="sm" onClick={handleCopy}>
                     {copied ? '✓ Copied' : 'Copy'}
                 </Button>
-                <span role="status" className="sr-only">{copied ? 'Code copied to clipboard' : ''}</span>
+                <span role="status" className="sr-only">
+                    {copied ? 'Code copied to clipboard' : ''}
+                </span>
             </div>
 
             <div
@@ -68,9 +70,13 @@ const Output = ({snippet, css}: OutputProps) => {
                 aria-labelledby={`output-tab-${active}`}
                 className={`${codeBlockClasses.wrapper} ${classes.code}`}
             >
-                {highlighted?.code === code
-                    ? <div dangerouslySetInnerHTML={{__html: highlighted.html}} />
-                    : <pre tabIndex={0}><code>{code}</code></pre>}
+                {highlighted?.code === code ? (
+                    <div dangerouslySetInnerHTML={{ __html: highlighted.html }} />
+                ) : (
+                    <pre tabIndex={0}>
+                        <code>{code}</code>
+                    </pre>
+                )}
             </div>
         </div>
     )

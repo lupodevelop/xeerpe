@@ -29,7 +29,9 @@
     color: var(--text);
     opacity: 0;
     transform: translateY(4px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
     pointer-events: none;
 }
 
@@ -69,7 +71,10 @@
 }
 
 @keyframes ctxIn {
-    from { opacity: 0; transform: translateY(8px) scale(0.985); }
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.985);
+    }
 }
 
 .panel {
@@ -113,9 +118,7 @@
     min-height: 0;
     padding: 20px;
     overflow: auto;
-    background:
-        radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.06), transparent 60%),
-        #060906;
+    background: radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), 0.06), transparent 60%), #060906;
 }
 
 .footer {

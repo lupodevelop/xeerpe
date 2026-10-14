@@ -1,8 +1,7 @@
-import {CSSLength, GradientColorStop, RgbaColor} from "../models/index.ts";
-import {isHexColor, isValidColor, isValidPosition} from "../validations/index.ts";
+import { CSSLength, GradientColorStop, RgbaColor } from '../models/index.ts'
+import { isHexColor, isValidColor, isValidPosition } from '../validations/index.ts'
 
-export const clamp = (value: number, min: number, max: number): number =>
-    Math.min(max, Math.max(min, value))
+export const clamp = (value: number, min: number, max: number): number => Math.min(max, Math.max(min, value))
 
 export const countTopLevelItems = (value: string): number => {
     let depth = 0
@@ -23,14 +22,16 @@ export const hexToRgba = (hex: string): RgbaColor => {
 
     const digits = trimmed.slice(1)
 
-    const expanded = digits.length <= 4
-        ? digits.split('').map(d => d + d).join('')
-        : digits
+    const expanded =
+        digits.length <= 4
+            ? digits
+                  .split('')
+                  .map((d) => d + d)
+                  .join('')
+            : digits
 
     const rgb = parseInt(expanded.slice(0, 6), 16)
-    const alpha = expanded.length === 8
-        ? parseInt(expanded.slice(6, 8), 16) / 255
-        : undefined
+    const alpha = expanded.length === 8 ? parseInt(expanded.slice(6, 8), 16) / 255 : undefined
 
     return {
         red: (rgb >> 16) & 255,
@@ -42,7 +43,7 @@ export const hexToRgba = (hex: string): RgbaColor => {
 
 export const withAlpha = (color: string, alpha?: number, fallbackAlpha = 1): string => {
     if (isHexColor(color)) {
-        const {red, green, blue, alpha: embedded} = hexToRgba(color)
+        const { red, green, blue, alpha: embedded } = hexToRgba(color)
         const finalAlpha = embedded ?? alpha ?? fallbackAlpha
         const rounded = Math.round(clamp(finalAlpha, 0, 1) * 1000) / 1000
         return `rgba(${red}, ${green}, ${blue}, ${rounded})`
@@ -60,9 +61,8 @@ export const parseLength = (input: string): CSSLength => {
     const match = input.trim().match(/^(-?\d*\.?\d+)([a-z%]*)$/i)
     if (!match) throw new Error(`Invalid CSS length: "${input}"`)
     const [, value, unit] = match
-    return {value: parseFloat(value), unit: unit || 'px'}
+    return { value: parseFloat(value), unit: unit || 'px' }
 }
-
 
 export const resolveColor = (value: string | null | undefined, defaultColor = 'transparent'): string => {
     if (value == null) return defaultColor

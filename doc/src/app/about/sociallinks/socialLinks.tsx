@@ -23,21 +23,8 @@ const SocialLinks = () => {
         <ul className={styles.list}>
             {links.map(({ label, href, path }) => (
                 <li key={label}>
-                    <a
-                        href={href}
-                        className={styles.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={label}
-                        title={label}
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                            fill="currentColor"
-                            aria-hidden="true"
-                        >
+                    <a href={href} className={styles.link} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
                             <path d={path} />
                         </svg>
                     </a>

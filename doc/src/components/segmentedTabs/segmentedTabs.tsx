@@ -1,10 +1,10 @@
 'use client'
 
-import {KeyboardEvent, useRef} from 'react'
-import {SegmentedTabsProps} from '@/src/models/segmentedTabs.ts'
+import { KeyboardEvent, useRef } from 'react'
+import { SegmentedTabsProps } from '@/src/models/segmentedTabs.ts'
 import classes from './segmentedTabs.module.css'
 
-const SegmentedTabs = ({tabs, activeId, onChange, ariaLabel, idPrefix, className}: SegmentedTabsProps) => {
+const SegmentedTabs = ({ tabs, activeId, onChange, ariaLabel, idPrefix, className }: SegmentedTabsProps) => {
     const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -21,7 +21,9 @@ const SegmentedTabs = ({tabs, activeId, onChange, ariaLabel, idPrefix, className
             {tabs.map((tab, index) => (
                 <button
                     key={tab.id}
-                    ref={(element) => { tabRefs.current[tab.id] = element }}
+                    ref={(element) => {
+                        tabRefs.current[tab.id] = element
+                    }}
                     type="button"
                     role="tab"
                     id={idPrefix ? `${idPrefix}-${tab.id}` : undefined}

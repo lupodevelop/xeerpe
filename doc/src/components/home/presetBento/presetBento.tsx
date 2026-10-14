@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import {Preset} from 'xeerpe'
+import { Preset } from 'xeerpe'
 import classes from './presetBento.module.css'
-import {bentoPresets} from "@/src/data/home.ts";
+import { bentoPresets } from '@/src/data/home.ts'
 
 const PresetBento = () => (
     <div className={classes.bento}>

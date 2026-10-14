@@ -36,7 +36,7 @@
 }
 
 .logoStage::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 12% 8%;
     background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.35), transparent);
@@ -49,7 +49,9 @@
     height: auto;
     transform: rotateY(-28deg) rotateX(10deg) rotateZ(2deg);
     filter: drop-shadow(-24px 28px 28px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 0 rgba(var(--accent-rgb), 0));
-    transition: transform 0.6s ease, filter 0.6s ease;
+    transition:
+        transform 0.6s ease,
+        filter 0.6s ease;
     animation: logoTurn 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s backwards;
 }
 
@@ -67,7 +69,7 @@
 }
 
 .logo::after {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     background:
@@ -92,7 +94,8 @@
         opacity: 0;
         background-position: 0% 0%;
     }
-    35%, 65% {
+    35%,
+    65% {
         opacity: 0.85;
     }
     100% {
@@ -140,7 +143,7 @@
     color: var(--text-muted);
 
     li + li::before {
-        content: "·";
+        content: '·';
         margin: 0 0.75rem;
         color: var(--text-subtle);
     }
@@ -355,7 +358,9 @@
         text-decoration: underline;
         text-decoration-color: rgba(151, 150, 150, 0.5);
         text-underline-offset: 3px;
-        transition: color 0.15s ease, text-decoration-color 0.15s ease;
+        transition:
+            color 0.15s ease,
+            text-decoration-color 0.15s ease;
 
         &:hover {
             color: var(--text-strong) !important;

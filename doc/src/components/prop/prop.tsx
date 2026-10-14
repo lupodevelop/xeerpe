@@ -1,5 +1,5 @@
 import classes from './prop.module.css'
-import {PropProps} from "@/src/models/prop.ts";
+import { PropProps } from '@/src/models/prop.ts'
 
 const Prop = ({ name, type, defaultValue, required, children }: PropProps) => {
     const rawTypes = Array.isArray(type) ? type : [type]

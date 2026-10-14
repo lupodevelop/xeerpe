@@ -1,5 +1,5 @@
-import {CSSProperties} from 'react'
-import {Preset} from 'xeerpe'
+import { CSSProperties } from 'react'
+import { Preset } from 'xeerpe'
 
 const cache = new Map<string, CSSProperties>()
 

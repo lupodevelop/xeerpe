@@ -1,7 +1,7 @@
 'use client'
 
-import {useId} from 'react'
-import {FieldControlProps} from '@/src/models/playground.ts'
+import { useId } from 'react'
+import { FieldControlProps } from '@/src/models/playground.ts'
 import FormField from '@cmp/formField/formField.tsx'
 import Input from '@cmp/input/input.tsx'
 import Select from '@cmp/select/select.tsx'
@@ -25,24 +25,19 @@ const toPickerValue = (color: string): string => {
 
     if (HEX_PICKER.test(resolved)) return resolved
 
-    const channels = resolved.match(/[\d.]+/g)?.slice(0, 3).map(Number)
-    return channels?.length === 3
-        ? `#${channels.map((channel) => Math.round(channel).toString(16).padStart(2, '0')).join('')}`
-        : '#000000'
+    const channels = resolved
+        .match(/[\d.]+/g)
+        ?.slice(0, 3)
+        .map(Number)
+    return channels?.length === 3 ? `#${channels.map((channel) => Math.round(channel).toString(16).padStart(2, '0')).join('')}` : '#000000'
 }
 
-const FieldControl = ({field, value, onChange}: FieldControlProps) => {
+const FieldControl = ({ field, value, onChange }: FieldControlProps) => {
     const id = useId()
     const current = value ?? field.fallback ?? ''
 
     if (field.kind === 'boolean') {
-        return (
-            <Checkbox
-                label={field.label}
-                checked={Boolean(current)}
-                onChange={(event) => onChange(event.target.checked)}
-            />
-        )
+        return <Checkbox label={field.label} checked={Boolean(current)} onChange={(event) => onChange(event.target.checked)} />
     }
 
     return (
@@ -107,14 +102,12 @@ const FieldControl = ({field, value, onChange}: FieldControlProps) => {
             )}
 
             {field.kind === 'select' && (
-                <Select
-                    id={id}
-                    value={String(current)}
-                    onChange={(event) => onChange(event.target.value)}
-                >
+                <Select id={id} value={String(current)} onChange={(event) => onChange(event.target.value)}>
                     {field.fallback === undefined && <option value="">Default</option>}
                     {field.options?.map((option) => (
-                        <option key={option} value={option}>{option}</option>
+                        <option key={option} value={option}>
+                            {option}
+                        </option>
                     ))}
                 </Select>
             )}

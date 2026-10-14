@@ -1,16 +1,20 @@
 import {
     BuilderLayer,
-    CSSProperties, DotsOptions, GridOptions,
-    PatternOptions, PatternType, RaysOptions, StarsOptions,
-} from "../models/index.ts";
-import {parseLength, withAlpha} from "../utils/index.ts";
-import {isValidAngle, isValidCSSPosition} from "../validations/index.ts";
+    CSSProperties,
+    DotsOptions,
+    GridOptions,
+    PatternOptions,
+    PatternType,
+    RaysOptions,
+    StarsOptions,
+} from '../models/index.ts'
+import { parseLength, withAlpha } from '../utils/index.ts'
+import { isValidAngle, isValidCSSPosition } from '../validations/index.ts'
 
-const toDataUrl = (svg: string): string =>
-    `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
+const toDataUrl = (svg: string): string => `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
 
 export const dotsBuilder = (options: DotsOptions): string => {
-    const {color = '#000000', background = 'transparent', size = '20px', spacing, opacity, strokeWidth} = options
+    const { color = '#000000', background = 'transparent', size = '20px', spacing, opacity, strokeWidth } = options
 
     const gap = parseLength(spacing ?? size)
     const r = strokeWidth ? parseLength(strokeWidth).value : parseLength(size).value * 0.15
@@ -25,7 +29,7 @@ export const dotsBuilder = (options: DotsOptions): string => {
 }
 
 export const gridBuilder = (options: GridOptions): string => {
-    const {color = '#000000', background = 'transparent', size = '40px', opacity, strokeWidth = '1px'} = options
+    const { color = '#000000', background = 'transparent', size = '40px', opacity, strokeWidth = '1px' } = options
 
     const s = parseLength(size)
     const sw = parseLength(strokeWidth).value
@@ -40,7 +44,7 @@ export const gridBuilder = (options: GridOptions): string => {
 }
 
 export const starsBuilder = (options: StarsOptions): string => {
-    const {color = '#ffffff', background = 'transparent', size = '200px', count = 24, seed = 1, opacity, strokeWidth = '1.4px'} = options
+    const { color = '#ffffff', background = 'transparent', size = '200px', count = 24, seed = 1, opacity, strokeWidth = '1.4px' } = options
 
     const s = parseLength(size)
     const maxRadius = parseLength(strokeWidth).value
@@ -49,7 +53,7 @@ export const starsBuilder = (options: StarsOptions): string => {
     let state = Math.max(1, Math.round(seed)) % 2147483647
     const random = () => (state = (state * 16807) % 2147483647) / 2147483647
 
-    const stars = Array.from({length: Math.max(0, Math.round(count))}, () => {
+    const stars = Array.from({ length: Math.max(0, Math.round(count)) }, () => {
         const cx = (random() * s.value).toFixed(1)
         const cy = (random() * s.value).toFixed(1)
         const r = (0.4 + random() * Math.max(0, maxRadius - 0.4)).toFixed(2)
@@ -66,7 +70,7 @@ export const starsBuilder = (options: StarsOptions): string => {
 }
 
 export const raysBuilder = (options: RaysOptions): string => {
-    const {color = '#000000', background = 'transparent', count = 12, position = 'center', angle = '0deg', opacity} = options
+    const { color = '#000000', background = 'transparent', count = 12, position = 'center', angle = '0deg', opacity } = options
 
     const c = withAlpha(color, opacity, 0.15)
     const step = 360 / Math.max(1, Math.round(count))
@@ -98,5 +102,5 @@ export const buildPatternLayer = (type: PatternType, options: PatternOptions): B
         backgroundSize: options.backgroundSize ?? 'auto',
     }
 
-    return {type: 'pattern', properties}
+    return { type: 'pattern', properties }
 }

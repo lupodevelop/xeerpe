@@ -1,24 +1,28 @@
-import Image from "next/image";
+import Image from 'next/image'
 import xeerpeIcon from '@assets/xeerpeIconLarge.png'
 import xeerpeLogo from '@assets/xeerpeLogo.png'
-import classes from "./page.module.css"
-import LinkButton from "@cmp/buttons/linkButton.tsx";
-import PlayIcon from "@cmp/icons/playIcon.tsx";
-import ChainSteps from "@cmp/home/chainSteps/chainSteps.tsx";
-import PresetBento from "@cmp/home/presetBento/presetBento.tsx";
-import UiExamples from "@cmp/home/uiExamples/uiExamples.tsx";
-import DotDivider from "@cmp/home/dotDivider/dotDivider.tsx";
-import {Builder, presetNames} from "xeerpe";
-import Link from "next/link";
-import {serializeJsonLd, websiteJsonLd} from "@/src/config/site.ts";
+import classes from './page.module.css'
+import LinkButton from '@cmp/buttons/linkButton.tsx'
+import PlayIcon from '@cmp/icons/playIcon.tsx'
+import ChainSteps from '@cmp/home/chainSteps/chainSteps.tsx'
+import PresetBento from '@cmp/home/presetBento/presetBento.tsx'
+import UiExamples from '@cmp/home/uiExamples/uiExamples.tsx'
+import DotDivider from '@cmp/home/dotDivider/dotDivider.tsx'
+import { Builder, presetNames } from 'xeerpe'
+import Link from 'next/link'
+import { serializeJsonLd, websiteJsonLd } from '@/src/config/site.ts'
 
 const Page = () => {
-
-    const textStyle = new Builder().linearGradient({from: '#57B241' ,to: '#CAD328'}).toTextStyle()
+    const textStyle = new Builder().linearGradient({ from: '#57B241', to: '#CAD328' }).toTextStyle()
 
     const ctaBackground = new Builder()
         .radialGradient({ from: 'rgba(94,184,71,0.45)', to: 'transparent', position: '15% 0%', colorToPosition: '60%' })
-        .radialGradient({ from: 'rgba(202,211,40,0.25)', to: 'transparent', position: '90% 100%', colorToPosition: '55%' })
+        .radialGradient({
+            from: 'rgba(202,211,40,0.25)',
+            to: 'transparent',
+            position: '90% 100%',
+            colorToPosition: '55%',
+        })
         .linearGradient({ from: '#0b1a12', to: '#030604', angle: '160deg' })
         .grid({ color: '#5EB847', size: '32px', opacity: 0.12 })
         .grain({ intensity: 1.2 })
@@ -26,19 +30,12 @@ const Page = () => {
 
     return (
         <main id="main-content" tabIndex={-1}>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{__html: serializeJsonLd(websiteJsonLd())}}
-            />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteJsonLd()) }} />
             <div className={classes.mainContainer}>
-
                 <section className={classes.hero}>
                     <div className={classes.logoStage}>
-                        <div
-                            className={classes.logo}
-                            style={{'--logo-mask': `url(${xeerpeIcon.src})`} as React.CSSProperties}
-                        >
-                            <Image className={classes.logoImage} src={xeerpeIcon} alt="xeerpe logo" priority/>
+                        <div className={classes.logo} style={{ '--logo-mask': `url(${xeerpeIcon.src})` } as React.CSSProperties}>
+                            <Image className={classes.logoImage} src={xeerpeIcon} alt="xeerpe logo" priority />
                         </div>
                     </div>
                     <div className={classes.heroText}>
@@ -53,7 +50,10 @@ const Page = () => {
                         </ul>
                         <div className={classes.actions}>
                             <LinkButton href={'/guide'}>Get Started →</LinkButton>
-                            <LinkButton href={'/playground'} variant="accent"><PlayIcon/>Play with xeerpe</LinkButton>
+                            <LinkButton href={'/playground'} variant="accent">
+                                <PlayIcon />
+                                Play with xeerpe
+                            </LinkButton>
                         </div>
                     </div>
                 </section>
@@ -64,8 +64,8 @@ const Page = () => {
                     <header className={classes.sectionHeader}>
                         <h2 className={classes.sectionTitle}>Build any CSS background, one method at a time</h2>
                         <p className={classes.sectionText}>
-                            Describe it the way you would say it out loud. Each method adds a layer,
-                            and toStyle() turns the chain into a style object.
+                            Describe it the way you would say it out loud. Each method adds a layer, and toStyle() turns the chain into a
+                            style object.
                         </p>
                     </header>
                     <ChainSteps />
@@ -77,10 +77,8 @@ const Page = () => {
                     <header className={classes.sectionHeader}>
                         <h2 className={classes.sectionTitle}>Metals, gems, skies and more</h2>
                         <p className={classes.sectionText}>
-                            Every preset is a regular Builder, so you can keep chaining effects, patterns and
-                            animations on top.
+                            Every preset is a regular Builder, so you can keep chaining effects, patterns and animations on top.
                         </p>
-
                     </header>
                     <PresetBento />
                     <div className={classes.sectionFooter}>
@@ -102,23 +100,24 @@ const Page = () => {
 
                 <section className={classes.cta} style={ctaBackground}>
                     <div className={classes.ctaLogoStage}>
-                        <Image className={classes.ctaLogo} src={xeerpeLogo} alt="" aria-hidden="true"/>
+                        <Image className={classes.ctaLogo} src={xeerpeLogo} alt="" aria-hidden="true" />
                     </div>
                     <div className={classes.ctaContent}>
                         <h2 className={classes.ctaTitle}>craft().chain().done()</h2>
                         <p className={classes.ctaText}>
                             Zero dependencies, any framework.
-                            <br/>
+                            <br />
                             Install it and write your first chain in a minute.
                         </p>
                         <div className={classes.actions}>
-                            <LinkButton href={'/guide/usage'} >Read the usage guide</LinkButton>
-                            <LinkButton href={'/playground'} variant="accent"><PlayIcon/>Play with xeerpe</LinkButton>
+                            <LinkButton href={'/guide/usage'}>Read the usage guide</LinkButton>
+                            <LinkButton href={'/playground'} variant="accent">
+                                <PlayIcon />
+                                Play with xeerpe
+                            </LinkButton>
                         </div>
                     </div>
-                    <div className={classes.joke}>
-                        Yes, this background is made with xeerpe too :)
-                    </div>
+                    <div className={classes.joke}>Yes, this background is made with xeerpe too :)</div>
                 </section>
 
                 <div className={classes.creditsSection}>

@@ -1,35 +1,21 @@
-import {Builder} from 'xeerpe'
-import {xeerpePresets} from '../../../lib/src/presets/presets.ts'
-import {findMethod} from '@/src/data/playgroundRegistry.ts'
-import {
-    BuildResult,
-    Field,
-    Layer,
-    Literal,
-    Method,
-    Params,
-    PlaygroundState,
-    Primitive,
-    RecordedCall,
-} from '@/src/models/playground.ts'
+import { Builder } from 'xeerpe'
+import { xeerpePresets } from '../../../lib/src/presets/presets.ts'
+import { findMethod } from '@/src/data/playgroundRegistry.ts'
+import { BuildResult, Field, Layer, Literal, Method, Params, PlaygroundState, Primitive, RecordedCall } from '@/src/models/playground.ts'
 
-export const emptyState: PlaygroundState = {layers: []}
+export const emptyState: PlaygroundState = { layers: [] }
 
 export const createId = (): string => Math.random().toString(36).slice(2, 8)
 
 const initialParams = (fields: Field[]): Params =>
-    Object.fromEntries(
-        fields
-            .filter((field) => field.initial !== undefined)
-            .map((field) => [field.key, field.initial as Primitive])
-    )
+    Object.fromEntries(fields.filter((field) => field.initial !== undefined).map((field) => [field.key, field.initial as Primitive]))
 
 export const createLayer = (method: Method, id: string): Layer => ({
     id,
     method: method.name,
     visible: true,
     params: initialParams(method.fields),
-    points: Array.from({length: method.initialPoints ?? 0}, (_, index) => ({
+    points: Array.from({ length: method.initialPoints ?? 0 }, (_, index) => ({
         ...initialParams(method.pointFields ?? []),
         ...(index > 0 ? method.pointInitial : {}),
     })),
@@ -40,23 +26,27 @@ export const createPoint = (method: Method): Params => ({
     ...method.pointInitial,
 })
 
-const isPrimitive = (value: unknown): value is Primitive =>
-    ['string', 'number', 'boolean'].includes(typeof value)
+const isPrimitive = (value: unknown): value is Primitive => ['string', 'number', 'boolean'].includes(typeof value)
 
 const toParams = (source: unknown): Params =>
     Object.fromEntries(
-        Object.entries(source && typeof source === 'object' ? source : {}).filter(([, value]) => isPrimitive(value))
+        Object.entries(source && typeof source === 'object' ? source : {}).filter(([, value]) => isPrimitive(value)),
     ) as Params
 
 export const presetToState = (name: string): PlaygroundState => {
     const calls: RecordedCall[] = []
 
-    const recorder: unknown = new Proxy({}, {
-        get: (_, method: string) => (options: Record<string, unknown> = {}) => {
-            calls.push({method, options})
-            return recorder
+    const recorder: unknown = new Proxy(
+        {},
+        {
+            get:
+                (_, method: string) =>
+                (options: Record<string, unknown> = {}) => {
+                    calls.push({ method, options })
+                    return recorder
+                },
         },
-    })
+    )
 
     xeerpePresets[name](recorder as Builder)
 
@@ -65,20 +55,20 @@ export const presetToState = (name: string): PlaygroundState => {
         if (!method) return []
 
         const items = method.pointKey ? call.options[method.pointKey] : undefined
-        const points = Array.isArray(items)
-            ? items.map((item) => typeof item === 'string' ? {color: item} : toParams(item))
-            : []
+        const points = Array.isArray(items) ? items.map((item) => (typeof item === 'string' ? { color: item } : toParams(item))) : []
 
-        return [{
-            id: createId(),
-            method: method.name,
-            visible: true,
-            params: toParams(call.options),
-            points,
-        }]
+        return [
+            {
+                id: createId(),
+                method: method.name,
+                visible: true,
+                params: toParams(call.options),
+                points,
+            },
+        ]
     })
 
-    return {layers}
+    return { layers }
 }
 
 const random = (min: number, max: number): number => min + Math.random() * (max - min)
@@ -87,7 +77,9 @@ const chance = (probability: number): boolean => Math.random() < probability
 const round = (value: number, digits = 0): number => Math.round(value * 10 ** digits) / 10 ** digits
 
 const toHexByte = (value: number): string =>
-    Math.round(value * 255).toString(16).padStart(2, '0')
+    Math.round(value * 255)
+        .toString(16)
+        .padStart(2, '0')
 
 const hslToHex = (hue: number, saturation: number, lightness: number, alpha?: number): string => {
     const s = saturation / 100
@@ -108,60 +100,62 @@ const randomPosition = (): string => `${round(random(0, 100))}% ${round(random(0
 
 const randomLayer = (name: string, params: Params = {}, points: Params[] = []): Layer => {
     const layer = createLayer(findMethod(name) as Method, createId())
-    return {...layer, params: {...layer.params, ...params}, points: points.length ? points : layer.points}
+    return { ...layer, params: { ...layer.params, ...params }, points: points.length ? points : layer.points }
 }
 
 const randomBase = (): Layer => {
     const kind = pick(['linearGradient', 'radialGradient', 'conicGradient', 'meshGradient'])
 
     if (kind === 'linearGradient') {
-        return randomLayer(kind, {from: randomColor(), to: randomColor([10, 35]), angle: `${round(random(0, 360))}deg`})
+        return randomLayer(kind, {
+            from: randomColor(),
+            to: randomColor([10, 35]),
+            angle: `${round(random(0, 360))}deg`,
+        })
     }
 
     if (kind === 'radialGradient') {
-        return randomLayer(kind, {from: randomColor(), to: randomColor([5, 30]), position: randomPosition()})
+        return randomLayer(kind, { from: randomColor(), to: randomColor([5, 30]), position: randomPosition() })
     }
 
     if (kind === 'conicGradient') {
-        return randomLayer(kind, {from: randomColor(), to: randomColor(), angle: `${round(random(0, 360))}deg`})
+        return randomLayer(kind, { from: randomColor(), to: randomColor(), angle: `${round(random(0, 360))}deg` })
     }
 
-    const points = Array.from({length: round(random(2, 4))}, () => ({
+    const points = Array.from({ length: round(random(2, 4)) }, () => ({
         from: randomColor([45, 65], 0.75),
         to: 'transparent',
         position: randomPosition(),
         colorToPosition: `${round(random(40, 70))}%`,
     }))
 
-    return randomLayer(kind, {background: randomColor([5, 15])}, points)
+    return randomLayer(kind, { background: randomColor([5, 15]) }, points)
 }
 
 const randomPattern = (): Layer => {
     const kind = pick(['dots', 'grid', 'stars', 'rays'])
-    const common = {color: pick(['#ffffff', randomColor([60, 80])]), opacity: round(random(0.05, 0.25), 2)}
+    const common = { color: pick(['#ffffff', randomColor([60, 80])]), opacity: round(random(0.05, 0.25), 2) }
 
-    if (kind === 'dots') return randomLayer(kind, {...common, size: `${round(random(10, 28))}px`})
-    if (kind === 'grid') return randomLayer(kind, {...common, size: `${round(random(20, 60))}px`})
-    if (kind === 'stars') return randomLayer(kind, {color: '#ffffff', count: round(random(20, 80)), seed: round(random(1, 99))})
-    return randomLayer(kind, {...common, count: round(random(6, 24))})
+    if (kind === 'dots') return randomLayer(kind, { ...common, size: `${round(random(10, 28))}px` })
+    if (kind === 'grid') return randomLayer(kind, { ...common, size: `${round(random(20, 60))}px` })
+    if (kind === 'stars') return randomLayer(kind, { color: '#ffffff', count: round(random(20, 80)), seed: round(random(1, 99)) })
+    return randomLayer(kind, { ...common, count: round(random(6, 24)) })
 }
 
 const randomEffect = (): Layer => {
     const kind = pick(['grain', 'vignette', 'noise'])
 
-    if (kind === 'grain') return randomLayer(kind, {intensity: round(random(0.5, 1.5), 1)})
-    if (kind === 'vignette') return randomLayer(kind, {intensity: round(random(0.2, 0.5), 2)})
-    return randomLayer(kind, {opacity: round(random(0.05, 0.2), 2)})
+    if (kind === 'grain') return randomLayer(kind, { intensity: round(random(0.5, 1.5), 1) })
+    if (kind === 'vignette') return randomLayer(kind, { intensity: round(random(0.2, 0.5), 2) })
+    return randomLayer(kind, { opacity: round(random(0.05, 0.2), 2) })
 }
 
 export const generateRandomState = (): PlaygroundState => {
-    const effects = Array.from({length: round(random(0, 2))}, randomEffect)
-    const patterns = Array.from({length: round(random(0, 1.5))}, randomPattern)
-    const animations = chance(0.25)
-        ? [randomLayer(pick(['aurora', 'breathe', 'drift', 'float', 'shimmer', 'pulse']))]
-        : []
+    const effects = Array.from({ length: round(random(0, 2)) }, randomEffect)
+    const patterns = Array.from({ length: round(random(0, 1.5)) }, randomPattern)
+    const animations = chance(0.25) ? [randomLayer(pick(['aurora', 'breathe', 'drift', 'float', 'shimmer', 'pulse']))] : []
 
-    return {layers: [...effects, ...patterns, randomBase(), ...animations]}
+    return { layers: [...effects, ...patterns, randomBase(), ...animations] }
 }
 
 const NUMERIC = /^-?\d+(\.\d+)?$/
@@ -172,9 +166,7 @@ const activeOptions = (fields: Field[], params: Params): Record<string, Literal>
     fields.forEach((field) => {
         const value = params[field.key]
         if (value === undefined || value === '' || value === field.fallback) return
-        options[field.key] = field.asNumber && typeof value === 'string' && NUMERIC.test(value)
-            ? Number(value)
-            : value
+        options[field.key] = field.asNumber && typeof value === 'string' && NUMERIC.test(value) ? Number(value) : value
     })
 
     return options
@@ -201,10 +193,7 @@ const orderedLayers = (state: PlaygroundState): Layer[] => {
     const visible = state.layers.filter((layer) => layer.visible && findMethod(layer.method))
     const isAnimation = (layer: Layer) => findMethod(layer.method)?.group === 'animation'
 
-    return [
-        ...visible.filter((layer) => !isAnimation(layer)),
-        ...visible.filter(isAnimation),
-    ]
+    return [...visible.filter((layer) => !isAnimation(layer)), ...visible.filter(isAnimation)]
 }
 
 const animationWarnings = (layers: Layer[]): Record<string, string> => {
@@ -229,8 +218,7 @@ const animationWarnings = (layers: Layer[]): Record<string, string> => {
     return warnings
 }
 
-const messageOf =(error: unknown): string =>
-    error instanceof Error ? error.message : String(error)
+const messageOf = (error: unknown): string => (error instanceof Error ? error.message : String(error))
 
 export const buildFromState = (state: PlaygroundState): BuildResult => {
     const errors: Record<string, string> = {}
@@ -249,16 +237,15 @@ export const buildFromState = (state: PlaygroundState): BuildResult => {
 
     try {
         const builder = valid.reduce(applyLayer, new Builder())
-        return {style: builder.toStyle(), error: null, errors, warnings}
+        return { style: builder.toStyle(), error: null, errors, warnings }
     } catch (error) {
-        return {style: {}, error: messageOf(error), errors, warnings}
+        return { style: {}, error: messageOf(error), errors, warnings }
     }
 }
 
 const pad = (depth: number): string => '    '.repeat(depth)
 
-const quote = (value: string): string =>
-    `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`
+const quote = (value: string): string => `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`
 
 const literal = (value: Literal, depth: number): string => {
     if (typeof value === 'string') return quote(value)
@@ -284,25 +271,16 @@ export const serializeToSnippet = (state: PlaygroundState): string => {
         return `${pad(1)}.${method.name}(${hasOptions ? literal(options, 1) : ''})`
     })
 
-    return [
-        "import {Builder} from 'xeerpe'",
-        '',
-        'const style = new Builder()',
-        ...calls,
-        `${pad(1)}.toStyle()`,
-    ].join('\n')
+    return ["import {Builder} from 'xeerpe'", '', 'const style = new Builder()', ...calls, `${pad(1)}.toStyle()`].join('\n')
 }
 
-const toKebab = (property: string): string =>
-    property.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
+const toKebab = (property: string): string => property.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
 
 export const toCss = (style: Record<string, string>, keyframes: Record<string, string>): string => {
     const declarations = Object.entries(style).map(([property, value]) => `${pad(1)}${toKebab(property)}: ${value};`)
     const rule = `.xeerpe-bg {\n${declarations.join('\n')}\n}`
 
-    const used = [...new Set(style.animation?.match(/xeerpe-[a-z]+/g) ?? [])]
-        .map((name) => keyframes[name])
-        .filter(Boolean)
+    const used = [...new Set(style.animation?.match(/xeerpe-[a-z]+/g) ?? [])].map((name) => keyframes[name]).filter(Boolean)
 
     return [rule, ...used].join('\n\n')
 }
@@ -342,8 +320,7 @@ const fromBase64Url = (encoded: string): string => {
 
 export const encodeState = (state: PlaygroundState): string => toBase64Url(JSON.stringify(state))
 
-const isParams = (value: unknown): value is Params =>
-    typeof value === 'object' && value !== null && !Array.isArray(value)
+const isParams = (value: unknown): value is Params => typeof value === 'object' && value !== null && !Array.isArray(value)
 
 export const decodeState = (encoded: string): PlaygroundState | null => {
     try {
@@ -360,7 +337,7 @@ export const decodeState = (encoded: string): PlaygroundState | null => {
                 points: Array.isArray(layer.points) ? layer.points.filter(isParams) : [],
             }))
 
-        return {layers}
+        return { layers }
     } catch {
         return null
     }

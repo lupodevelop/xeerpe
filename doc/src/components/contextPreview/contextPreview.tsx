@@ -1,11 +1,11 @@
 'use client'
 
-import {useState} from 'react'
+import { useState } from 'react'
 import classes from './contextPreview.module.css'
-import ContextModal from "@cmp/contextPreview/contextModal.tsx";
-import {ContextPreviewProps} from "@/src/models/contextPreview.ts";
+import ContextModal from '@cmp/contextPreview/contextModal.tsx'
+import { ContextPreviewProps } from '@/src/models/contextPreview.ts'
 
-const ContextPreview = ({title, style, code, expandedCode, children, className}: ContextPreviewProps) => {
+const ContextPreview = ({ title, style, code, expandedCode, children, className }: ContextPreviewProps) => {
     const [open, setOpen] = useState(false)
 
     return (
@@ -17,17 +17,12 @@ const ContextPreview = ({title, style, code, expandedCode, children, className}:
                 aria-label={`View in context: ${title}`}
             >
                 {children}
-                <span className={classes.hint} aria-hidden="true">View in context</span>
+                <span className={classes.hint} aria-hidden="true">
+                    View in context
+                </span>
             </button>
 
-            <ContextModal
-                open={open}
-                onClose={() => setOpen(false)}
-                title={title}
-                style={style}
-                code={code}
-                expandedCode={expandedCode}
-            />
+            <ContextModal open={open} onClose={() => setOpen(false)} title={title} style={style} code={code} expandedCode={expandedCode} />
         </>
     )
 }

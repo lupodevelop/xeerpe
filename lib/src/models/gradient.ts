@@ -1,26 +1,13 @@
-
 export type GradientType = 'linear' | 'radial' | 'conic' | 'mesh'
-export type LinearGradientDirection = 'to top' | 'to bottom' | 'to left' | 'to right' | 'to top right' | 'to bottom right' | 'to top left' | 'to bottom left'
-export type LinearGradientAngle =
-    | `${number}deg`
-    | `${number}rad`
-    | `${number}grad`
-    | `${number}turn`
+export type LinearGradientDirection =
+    'to top' | 'to bottom' | 'to left' | 'to right' | 'to top right' | 'to bottom right' | 'to top left' | 'to bottom left'
+export type LinearGradientAngle = `${number}deg` | `${number}rad` | `${number}grad` | `${number}turn`
 export type RadialGradientShape = 'circle' | 'ellipse' | null
 export type RadialGradientSize = 'closest-side' | 'closest-corner' | 'farthest-side' | 'farthest-corner' | string
 export type LinearGradientPositionUnit =
-    | `${number}%`
-    | `${number}px`
-    | `${number}rem`
-    | `${number}em`
-    | `${number}vh`
-    | `${number}vw`
-    | `${number}vmin`
-    | `${number}vmax`
+    `${number}%` | `${number}px` | `${number}rem` | `${number}em` | `${number}vh` | `${number}vw` | `${number}vmin` | `${number}vmax`
 
-export type LinearGradientPosition =
-    | LinearGradientPositionUnit
-    | `calc(${string})`
+export type LinearGradientPosition = LinearGradientPositionUnit | `calc(${string})`
 
 export type GradientOptions = LinearGradientOptions | RadialGradientOptions | ConicGradientOptions | MeshGradientOptions
 
@@ -42,7 +29,7 @@ export interface LinearGradientOptions extends GradientBase {
 export interface RadialGradientOptions extends GradientBase {
     shape?: RadialGradientShape
     position?: string
-    size?: RadialGradientSize,
+    size?: RadialGradientSize
     colorFromPosition?: string
     colorToPosition?: string
 }
@@ -54,6 +41,6 @@ export interface ConicGradientOptions extends GradientBase {
 }
 
 export interface MeshGradientOptions extends GradientBase {
-    background: string,
+    background: string
     layers: RadialGradientOptions[]
 }

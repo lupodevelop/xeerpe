@@ -1,10 +1,10 @@
 export type PatternType = 'dots' | 'grid' | 'stars' | 'rays'
 
 export interface PatterBaseOptions {
-    color?: string,
-    background?: string,
-    size?: string,
-    opacity?: number,
+    color?: string
+    background?: string
+    size?: string
+    opacity?: number
     strokeWidth?: string
     backgroundSize?: string
 }
@@ -12,10 +12,10 @@ export interface PatterBaseOptions {
 export interface DotsOptions extends PatterBaseOptions {
     color?: string
     background?: string
-    size?: string,
+    size?: string
     spacing?: string
     style?: string
-    opacity?: number,
+    opacity?: number
 }
 
 export interface GridOptions extends PatterBaseOptions {}
@@ -31,4 +31,4 @@ export interface RaysOptions extends PatterBaseOptions {
     angle?: string
 }
 
-export type PatternOptions  = DotsOptions | GridOptions | StarsOptions | RaysOptions
+export type PatternOptions = DotsOptions | GridOptions | StarsOptions | RaysOptions

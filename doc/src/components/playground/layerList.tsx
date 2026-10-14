@@ -1,12 +1,12 @@
 'use client'
 
-import {findMethod} from '@/src/data/playgroundRegistry.ts'
-import {LayerListProps} from '@/src/models/playground.ts'
-import {createId} from '@/src/utils/playground.ts'
+import { findMethod } from '@/src/data/playgroundRegistry.ts'
+import { LayerListProps } from '@/src/models/playground.ts'
+import { createId } from '@/src/utils/playground.ts'
 import Button from '@cmp/buttons/button.tsx'
 import classes from './playground.module.css'
 
-const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: LayerListProps) => {
+const LayerList = ({ layers, selectedId, errors, warnings, dispatch, onSelect }: LayerListProps) => {
     if (!layers.length) {
         return <p className={classes.empty}>Nothing here yet. Pick a layer type below, or start from a preset.</p>
     }
@@ -27,12 +27,7 @@ const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: L
                         data-error={Boolean(errors[layer.id])}
                         data-warning={Boolean(warnings[layer.id])}
                     >
-                        <button
-                            type="button"
-                            className={classes.layerSelect}
-                            aria-pressed={isSelected}
-                            onClick={() => onSelect(layer.id)}
-                        >
+                        <button type="button" className={classes.layerSelect} aria-pressed={isSelected} onClick={() => onSelect(layer.id)}>
                             <span className={classes.layerName}>{label}</span>
                             <span className={classes.layerKind}>{method?.group}</span>
                         </button>
@@ -44,7 +39,7 @@ const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: L
                                 title={layer.visible ? 'Hide layer' : 'Show layer'}
                                 aria-label={layer.visible ? `Hide ${label}` : `Show ${label}`}
                                 aria-pressed={!layer.visible}
-                                onClick={() => dispatch({type: 'TOGGLE_VISIBILITY', id: layer.id})}
+                                onClick={() => dispatch({ type: 'TOGGLE_VISIBILITY', id: layer.id })}
                             >
                                 {layer.visible ? '◉' : '○'}
                             </Button>
@@ -53,7 +48,7 @@ const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: L
                                 size="sm"
                                 title="Delete layer"
                                 aria-label={`Delete ${label}`}
-                                onClick={() => dispatch({type: 'REMOVE', id: layer.id})}
+                                onClick={() => dispatch({ type: 'REMOVE', id: layer.id })}
                             >
                                 ✕
                             </Button>
@@ -66,7 +61,7 @@ const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: L
                                     size="sm"
                                     aria-label={`Move ${label} up`}
                                     disabled={index === 0}
-                                    onClick={() => dispatch({type: 'MOVE', id: layer.id, direction: -1})}
+                                    onClick={() => dispatch({ type: 'MOVE', id: layer.id, direction: -1 })}
                                 >
                                     ↑ Up
                                 </Button>
@@ -75,7 +70,7 @@ const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: L
                                     size="sm"
                                     aria-label={`Move ${label} down`}
                                     disabled={index === layers.length - 1}
-                                    onClick={() => dispatch({type: 'MOVE', id: layer.id, direction: 1})}
+                                    onClick={() => dispatch({ type: 'MOVE', id: layer.id, direction: 1 })}
                                 >
                                     ↓ Down
                                 </Button>
@@ -83,7 +78,7 @@ const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: L
                                     variant="secondary"
                                     size="sm"
                                     aria-label={`Duplicate ${label}`}
-                                    onClick={() => dispatch({type: 'DUPLICATE', id: layer.id, newId: createId()})}
+                                    onClick={() => dispatch({ type: 'DUPLICATE', id: layer.id, newId: createId() })}
                                 >
                                     ⧉ Duplicate
                                 </Button>
@@ -91,7 +86,9 @@ const LayerList = ({layers, selectedId, errors, warnings, dispatch, onSelect}: L
                         )}
 
                         {errors[layer.id] && (
-                            <p role="alert" className={classes.layerError}>{errors[layer.id]}</p>
+                            <p role="alert" className={classes.layerError}>
+                                {errors[layer.id]}
+                            </p>
                         )}
                         {!errors[layer.id] && warnings[layer.id] && (
                             <p className={`${classes.layerError} ${classes.layerWarning}`}>{warnings[layer.id]}</p>

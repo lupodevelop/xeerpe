@@ -1,15 +1,15 @@
-import {Builder} from "./builder.ts";
-import {xeerpePresets} from "../presets/presets.ts";
+import { Builder } from './builder.ts'
+import { xeerpePresets } from '../presets/presets.ts'
 
 export class Preset extends Builder {
     constructor(name: string) {
-        super();
+        super()
 
-        const config = xeerpePresets[name];
+        const config = xeerpePresets[name]
         if (!config) {
-            throw new Error(`Preset "${name}" not found`);
+            throw new Error(`Preset "${name}" not found`)
         }
 
-        config(this);
+        config(this)
     }
 }

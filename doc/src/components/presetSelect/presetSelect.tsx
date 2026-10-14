@@ -1,8 +1,8 @@
 'use client'
 
-import {ChangeEvent, KeyboardEvent, useEffect, useId, useMemo, useRef, useState} from 'react'
-import {presetCategories} from 'xeerpe'
-import {PresetOption, PresetOptionGroup, PresetSelectProps} from '@/src/models/presetSelect.ts'
+import { ChangeEvent, KeyboardEvent, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { presetCategories } from 'xeerpe'
+import { PresetOption, PresetOptionGroup, PresetSelectProps } from '@/src/models/presetSelect.ts'
 import Input from '@cmp/input/input.tsx'
 import PresetSwatch from './presetSwatch.tsx'
 import classes from './presetSelect.module.css'
@@ -12,24 +12,24 @@ const CHUNK = 36
 const titleOf = (category: string): string => category.charAt(0).toUpperCase() + category.slice(1)
 
 const allOptions: PresetOption[] = Object.entries(presetCategories).flatMap(([category, names]) =>
-    names.map((name) => ({name, category, label: titleOf(category)}))
+    names.map((name) => ({ name, category, label: titleOf(category) })),
 )
 
 const normalize = (value: string): string => value.toLowerCase().replace(/[^a-z0-9]/g, '')
 
-const haystacks = new Map(allOptions.map(({name, category}) => [name, normalize(`${name}${category}`)]))
+const haystacks = new Map(allOptions.map(({ name, category }) => [name, normalize(`${name}${category}`)]))
 
 const toGroups = (options: PresetOption[]): PresetOptionGroup[] =>
     options.reduce<PresetOptionGroup[]>((groups, option) => {
         const last = groups[groups.length - 1]
 
         if (last?.category === option.category) last.options.push(option)
-        else groups.push({category: option.category, label: option.label, options: [option]})
+        else groups.push({ category: option.category, label: option.label, options: [option] })
 
         return groups
     }, [])
 
-const PresetSelect = ({id, value, placeholder = 'Start from a preset…', className, onSelect}: PresetSelectProps) => {
+const PresetSelect = ({ id, value, placeholder = 'Start from a preset…', className, onSelect }: PresetSelectProps) => {
     const [open, setOpen] = useState(false)
     const [query, setQuery] = useState('')
     const [count, setCount] = useState(CHUNK)
@@ -47,19 +47,19 @@ const PresetSelect = ({id, value, placeholder = 'Start from a preset…', classN
 
     const matches = useMemo(() => {
         const term = normalize(query)
-        return term ? allOptions.filter(({name}) => haystacks.get(name)?.includes(term)) : allOptions
+        return term ? allOptions.filter(({ name }) => haystacks.get(name)?.includes(term)) : allOptions
     }, [query])
 
     const groups = useMemo(() => toGroups(matches.slice(0, count)), [matches, count])
-    const active = activeName && matches.some(({name}) => name === activeName) ? activeName : matches[0]?.name
+    const active = activeName && matches.some(({ name }) => name === activeName) ? activeName : matches[0]?.name
 
     useEffect(() => {
-        if (open) searchRef.current?.focus({preventScroll: true})
+        if (open) searchRef.current?.focus({ preventScroll: true })
     }, [open])
 
     useEffect(() => {
         if (!open || !active) return
-        listRef.current?.querySelector(`[data-name="${active}"]`)?.scrollIntoView({block: 'nearest'})
+        listRef.current?.querySelector(`[data-name="${active}"]`)?.scrollIntoView({ block: 'nearest' })
     }, [open, active])
 
     useEffect(() => {
@@ -70,7 +70,7 @@ const PresetSelect = ({id, value, placeholder = 'Start from a preset…', classN
             (entries) => {
                 if (entries.some((entry) => entry.isIntersecting)) setCount((current) => current + CHUNK)
             },
-            {root: listRef.current, rootMargin: '200px'}
+            { root: listRef.current, rootMargin: '200px' },
         )
 
         observer.observe(sentinel)
@@ -89,7 +89,7 @@ const PresetSelect = ({id, value, placeholder = 'Start from a preset…', classN
     }, [open])
 
     function expand() {
-        const selected = value ? allOptions.findIndex(({name}) => name === value) : -1
+        const selected = value ? allOptions.findIndex(({ name }) => name === value) : -1
 
         setQuery('')
         setCount(Math.max(CHUNK, selected + CHUNK))
@@ -125,7 +125,7 @@ const PresetSelect = ({id, value, placeholder = 'Start from a preset…', classN
     }
 
     function handleKeys(event: KeyboardEvent<HTMLInputElement>) {
-        const index = matches.findIndex(({name}) => name === active)
+        const index = matches.findIndex(({ name }) => name === active)
 
         if (event.key === 'ArrowDown') moveTo(index + 1)
         else if (event.key === 'ArrowUp') moveTo(index - 1)
@@ -161,7 +161,9 @@ const PresetSelect = ({id, value, placeholder = 'Start from a preset…', classN
                 }}
             >
                 {value && <PresetSwatch name={value} className={classes.triggerSwatch} />}
-                <span className={classes.triggerLabel} data-placeholder={!value}>{value || placeholder}</span>
+                <span className={classes.triggerLabel} data-placeholder={!value}>
+                    {value || placeholder}
+                </span>
             </button>
 
             {open && (
@@ -215,7 +217,11 @@ const PresetSelect = ({id, value, placeholder = 'Start from a preset…', classN
                                     >
                                         <PresetSwatch name={option.name} />
                                         <code className={classes.name}>{option.name}</code>
-                                        {option.name === value && <span aria-hidden="true" className={classes.check}>✓</span>}
+                                        {option.name === value && (
+                                            <span aria-hidden="true" className={classes.check}>
+                                                ✓
+                                            </span>
+                                        )}
                                     </button>
                                 ))}
                             </div>

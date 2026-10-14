@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import classes from './button.module.css';
-import {ButtonProps} from "@/src/models/button.ts";
+import classes from './button.module.css'
+import { ButtonProps } from '@/src/models/button.ts'
 
 const Button = ({ variant = 'primary', size = 'md', className, children, ...rest }: ButtonProps) => {
     return (
@@ -12,7 +12,7 @@ const Button = ({ variant = 'primary', size = 'md', className, children, ...rest
         >
             {children}
         </button>
-    );
-};
+    )
+}
 
-export default Button;
+export default Button

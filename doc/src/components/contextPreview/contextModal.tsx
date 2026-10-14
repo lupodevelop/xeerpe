@@ -1,36 +1,36 @@
 'use client'
 
-import {useEffect, useId, useRef, useState} from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import classes from './contextPreview.module.css'
-import Button from "@cmp/buttons/button.tsx";
-import SegmentedTabs from "@cmp/segmentedTabs/segmentedTabs.tsx";
-import {styleToCss} from "@/src/utils/styleToCss.ts";
-import {
-    ContextCopyKind,
-    ContextModalProps,
-    ContextScene,
-    ContextSceneProps,
-    ContextSceneTab,
-} from "@/src/models/contextPreview.ts";
+import Button from '@cmp/buttons/button.tsx'
+import SegmentedTabs from '@cmp/segmentedTabs/segmentedTabs.tsx'
+import { styleToCss } from '@/src/utils/styleToCss.ts'
+import { ContextCopyKind, ContextModalProps, ContextScene, ContextSceneProps, ContextSceneTab } from '@/src/models/contextPreview.ts'
 
 const scenes: ContextSceneTab[] = [
-    {id: 'hero', label: 'Hero'},
-    {id: 'card', label: 'Card'},
-    {id: 'button', label: 'Button'},
-    {id: 'page', label: 'Page'},
+    { id: 'hero', label: 'Hero' },
+    { id: 'card', label: 'Card' },
+    { id: 'button', label: 'Button' },
+    { id: 'page', label: 'Page' },
 ]
 
-const Scene = ({scene, style}: ContextSceneProps) => {
+const Scene = ({ scene, style }: ContextSceneProps) => {
     switch (scene) {
         case 'hero':
             return (
                 <div className={classes.browser}>
-                    <div className={classes.browserBar}><i/><i/><i/></div>
+                    <div className={classes.browserBar}>
+                        <i />
+                        <i />
+                        <i />
+                    </div>
                     <section className={classes.hero}>
-                        <span className={classes.layer} style={style}/>
+                        <span className={classes.layer} style={style} />
                         <div className={classes.heroNav}>
                             <strong>Company name</strong>
-                            <span>Product</span><span>Pricing</span><span>Docs</span>
+                            <span>Product</span>
+                            <span>Pricing</span>
+                            <span>Docs</span>
                         </div>
                         <div className={classes.heroBody}>
                             <h3>Build something people love</h3>
@@ -44,7 +44,7 @@ const Scene = ({scene, style}: ContextSceneProps) => {
             return (
                 <div className={classes.cardStage}>
                     <article className={classes.card}>
-                        <span className={classes.layer} style={style}/>
+                        <span className={classes.layer} style={style} />
                         <span className={classes.badge}>New</span>
                         <h3>Weekly report</h3>
                         <p>Your team shipped 24 changes and closed 18 issues this week.</p>
@@ -56,11 +56,11 @@ const Scene = ({scene, style}: ContextSceneProps) => {
                 <div className={classes.cardStage}>
                     <div className={classes.buttons}>
                         <span className={classes.button}>
-                            <span className={classes.layer} style={style}/>
+                            <span className={classes.layer} style={style} />
                             <span>Get started</span>
                         </span>
                         <span className={`${classes.button} ${classes.buttonSmall}`}>
-                            <span className={classes.layer} style={style}/>
+                            <span className={classes.layer} style={style} />
                             <span>Learn more</span>
                         </span>
                     </div>
@@ -69,17 +69,21 @@ const Scene = ({scene, style}: ContextSceneProps) => {
         case 'page':
             return (
                 <div className={classes.page}>
-                    <span className={classes.layer} style={style}/>
+                    <span className={classes.layer} style={style} />
                     <div className={classes.pageContent}>
                         <div className={classes.pageHeader}>
                             <strong>Dashboard</strong>
-                            <span className={classes.avatar}/>
+                            <span className={classes.avatar} />
                         </div>
                         <div className={classes.pageGrid}>
-                            <div/><div/><div/>
+                            <div />
+                            <div />
+                            <div />
                         </div>
                         <div className={classes.pageRows}>
-                            <div/><div/><div/>
+                            <div />
+                            <div />
+                            <div />
                         </div>
                     </div>
                 </div>
@@ -87,7 +91,7 @@ const Scene = ({scene, style}: ContextSceneProps) => {
     }
 }
 
-const ContextModal = ({open, onClose, title, style, code, expandedCode, css}: ContextModalProps) => {
+const ContextModal = ({ open, onClose, title, style, code, expandedCode, css }: ContextModalProps) => {
     const dialogRef = useRef<HTMLDialogElement>(null)
     const tabsId = useId()
     const [copied, setCopied] = useState<ContextCopyKind | null>(null)
@@ -96,7 +100,7 @@ const ContextModal = ({open, onClose, title, style, code, expandedCode, css}: Co
 
     const copy = async (kind: ContextCopyKind) => {
         try {
-            const text = {code: code ?? '', expanded: expandedCode ?? '', css: css ?? styleToCss(style, title)}[kind]
+            const text = { code: code ?? '', expanded: expandedCode ?? '', css: css ?? styleToCss(style, title) }[kind]
             await navigator.clipboard.writeText(text)
             setCopied(kind)
             setTimeout(() => setCopied(null), 1500)
@@ -161,11 +165,9 @@ const ContextModal = ({open, onClose, title, style, code, expandedCode, css}: Co
                         aria-labelledby={`${tabsId}-${scene}`}
                         data-text={darkText ? 'dark' : 'light'}
                     >
-                        <p className="sr-only">
-                            {`Preview of ${title} applied to a ${scene}. The sample content is decorative.`}
-                        </p>
+                        <p className="sr-only">{`Preview of ${title} applied to a ${scene}. The sample content is decorative.`}</p>
                         <div className={classes.scene} aria-hidden="true">
-                            <Scene scene={scene} style={style}/>
+                            <Scene scene={scene} style={style} />
                         </div>
                     </div>
                     <footer className={classes.footer}>

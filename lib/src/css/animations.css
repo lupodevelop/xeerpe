@@ -1,5 +1,6 @@
 @keyframes xeerpe-pulse {
-    0%, 100% {
+    0%,
+    100% {
         opacity: 1;
     }
     50% {
@@ -17,7 +18,8 @@
 }
 
 @keyframes xeerpe-breathe {
-    0%, 100% {
+    0%,
+    100% {
         background-size: var(--xeerpe-breathe-size-from, 100% 100%);
     }
     50% {
@@ -74,7 +76,8 @@
 }
 
 @keyframes xeerpe-float {
-    0%, 100% {
+    0%,
+    100% {
         transform: translateY(0px);
     }
     50% {

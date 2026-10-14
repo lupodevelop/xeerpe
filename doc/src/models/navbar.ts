@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import { ReactNode } from 'react'
 
 export interface HomeLinkProps {
     className?: string
@@ -11,7 +11,7 @@ export interface NavLinkProps {
 }
 
 export interface NavbarLink {
-    title: string;
-    href: string;
-    external?: boolean;
+    title: string
+    href: string
+    external?: boolean
 }

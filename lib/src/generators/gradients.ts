@@ -1,4 +1,4 @@
-import { BuilderLayer, CSSProperties } from "../models/index.ts";
+import { BuilderLayer, CSSProperties } from '../models/index.ts'
 import {
     ConicGradientOptions,
     GradientOptions,
@@ -6,7 +6,7 @@ import {
     LinearGradientOptions,
     MeshGradientOptions,
     RadialGradientOptions,
-} from "../models/index.ts";
+} from '../models/index.ts'
 import {
     isValidAngle,
     isValidDirection,
@@ -15,16 +15,16 @@ import {
     isValidRadialSize,
     isValidBackgroundSize,
     isValidCSSPosition,
-} from "../validations/index.ts";
-import { resolveColor, formatColorStop } from "../utils/index.ts";
+} from '../validations/index.ts'
+import { resolveColor, formatColorStop } from '../utils/index.ts'
 
 export const linearGradientBuilder = (options: LinearGradientOptions): string => {
     const direction =
         options.angle && isValidAngle(options.angle)
             ? options.angle
             : options.direction && isValidDirection(options.direction)
-                ? options.direction
-                : '135deg'
+              ? options.direction
+              : '135deg'
 
     const colors = options.colors?.length
         ? options.colors.map(formatColorStop).join(', ')
@@ -35,11 +35,12 @@ export const linearGradientBuilder = (options: LinearGradientOptions): string =>
 }
 
 export const radialGradientBuilder = (options: RadialGradientOptions): string => {
-    const shape = options.shape === undefined
-        ? 'circle '
-        : options.shape === null
-            ? ''
-            : isValidRadialShape(options.shape)
+    const shape =
+        options.shape === undefined
+            ? 'circle '
+            : options.shape === null
+              ? ''
+              : isValidRadialShape(options.shape)
                 ? `${options.shape} `
                 : 'circle '
 
@@ -55,10 +56,7 @@ export const radialGradientBuilder = (options: RadialGradientOptions): string =>
 }
 
 export const conicGradientBuilder = (options: ConicGradientOptions): string => {
-    const angle =
-        options.angle && isValidAngle(options.angle)
-            ? `from ${options.angle} `
-            : ''
+    const angle = options.angle && isValidAngle(options.angle) ? `from ${options.angle} ` : ''
 
     const position = `at ${options.position && isValidCSSPosition(options.position) ? options.position : 'center'}`
 
@@ -80,20 +78,23 @@ export const meshGradient = (options: MeshGradientOptions): string => {
 
 export const buildGradientByType = (type: GradientType, options: GradientOptions): string => {
     switch (type) {
-        case 'linear': return linearGradientBuilder(options as LinearGradientOptions)
-        case 'radial': return radialGradientBuilder(options as RadialGradientOptions)
-        case 'conic': return conicGradientBuilder(options as ConicGradientOptions)
-        case 'mesh': return meshGradient(options as MeshGradientOptions)
-        default: throw new Error(`Unknown gradient type: "${type}"`)
+        case 'linear':
+            return linearGradientBuilder(options as LinearGradientOptions)
+        case 'radial':
+            return radialGradientBuilder(options as RadialGradientOptions)
+        case 'conic':
+            return conicGradientBuilder(options as ConicGradientOptions)
+        case 'mesh':
+            return meshGradient(options as MeshGradientOptions)
+        default:
+            throw new Error(`Unknown gradient type: "${type}"`)
     }
 }
 
 export const buildGradientLayer = (type: GradientType, options: GradientOptions): BuilderLayer => {
     const isMesh = type === 'mesh'
 
-    const backgroundSize = options.backgroundSize && isValidBackgroundSize(options.backgroundSize)
-        ? options.backgroundSize
-        : 'auto'
+    const backgroundSize = options.backgroundSize && isValidBackgroundSize(options.backgroundSize) ? options.backgroundSize : 'auto'
 
     const properties: CSSProperties = {
         ...(isMesh && {

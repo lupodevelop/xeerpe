@@ -1,13 +1,4 @@
-export type AnimationType =
-    | 'pulse'
-    | 'rotate'
-    | 'breathe'
-    | 'aurora'
-    | 'shimmer'
-    | 'liquid'
-    | 'plasma'
-    | 'float'
-    | 'drift'
+export type AnimationType = 'pulse' | 'rotate' | 'breathe' | 'aurora' | 'shimmer' | 'liquid' | 'plasma' | 'float' | 'drift'
 
 export type AnimationTarget = 'gradients' | 'patterns' | 'all'
 

@@ -1,27 +1,24 @@
-"use client";
+'use client'
 
-import {sidebarElements} from "@/src/data/sidebarItems.ts";
+import { sidebarElements } from '@/src/data/sidebarItems.ts'
 import classes from './sidebar.module.css'
-import SidebarLink from "@cmp/core/sidebar/sidebarLink.tsx";
-import {SidebarGroup, SidebarItem} from "@/src/models/sidebar.ts";
-import {useSidebar} from "@/src/context/sidebarContext.tsx";
-import {usePathname} from "next/navigation";
-import {Builder} from "xeerpe";
-import {NavbarLink} from "@/src/models/navbar.ts";
-import {navbarLinks} from "@/src/data/navbarItems.ts";
+import SidebarLink from '@cmp/core/sidebar/sidebarLink.tsx'
+import { SidebarGroup, SidebarItem } from '@/src/models/sidebar.ts'
+import { useSidebar } from '@/src/context/sidebarContext.tsx'
+import { usePathname } from 'next/navigation'
+import { Builder } from 'xeerpe'
+import { NavbarLink } from '@/src/models/navbar.ts'
+import { navbarLinks } from '@/src/data/navbarItems.ts'
 
 const Sidebar = () => {
-
-    const pathname = usePathname();
-    const { open } = useSidebar();
-    const isGuideRoute = pathname.startsWith("/guide");
-    const links: NavbarLink[] = pathname === "/"
-        ? navbarLinks
-        : [{title: "Home", href: "/"}, ...navbarLinks];
+    const pathname = usePathname()
+    const { open } = useSidebar()
+    const isGuideRoute = pathname.startsWith('/guide')
+    const links: NavbarLink[] = pathname === '/' ? navbarLinks : [{ title: 'Home', href: '/' }, ...navbarLinks]
 
     const sidebarBackground = new Builder()
-        .linearGradient({from: 'transparent', to: '#0a0f0a', angle: '135deg'})
-        .blur({type: 'backdrop', amount: '60px'})
+        .linearGradient({ from: 'transparent', to: '#0a0f0a', angle: '135deg' })
+        .blur({ type: 'backdrop', amount: '60px' })
         .toStyle()
 
     return (
@@ -37,24 +34,21 @@ const Sidebar = () => {
                     ))}
                 </ul>
 
-                {isGuideRoute && sidebarElements.map((group: SidebarGroup) => (
-                    <div key={group.slug} className={classes.group}>
-                        <h3 className={classes.groupTitle}>{group.title}</h3>
-                        <ul className={classes.sidebarLinksGroup}>
-                            {group.items.map((item: SidebarItem) => (
-                                <li key={item.slug}>
-                                    <div className={classes.linkItem}>
-
-                                    <SidebarLink href={`/guide/${item.slug}`}>
-                                        {item.title}
-                                    </SidebarLink>
-                                    </div>
-
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
+                {isGuideRoute &&
+                    sidebarElements.map((group: SidebarGroup) => (
+                        <div key={group.slug} className={classes.group}>
+                            <h3 className={classes.groupTitle}>{group.title}</h3>
+                            <ul className={classes.sidebarLinksGroup}>
+                                {group.items.map((item: SidebarItem) => (
+                                    <li key={item.slug}>
+                                        <div className={classes.linkItem}>
+                                            <SidebarLink href={`/guide/${item.slug}`}>{item.title}</SidebarLink>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
             </nav>
         </aside>
     )

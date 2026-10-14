@@ -1,25 +1,20 @@
-import {
-    BlurOptions,
-    BuilderLayer,
-    FilterOptions,
-    FilterType
-} from "../models/index.ts";
+import { BlurOptions, BuilderLayer, FilterOptions, FilterType } from '../models/index.ts'
 
 export const generateBlurEffect = (options: BlurOptions) => {
-    const {amount = '20px', type = 'backdrop'} = options
+    const { amount = '20px', type = 'backdrop' } = options
 
     if (type === 'backdrop') {
         return {
             properties: {
                 backdropFilter: `blur(${amount})`,
                 ['-webkit-backdrop-filter']: `blur(${amount})`,
-            }
+            },
         }
     }
     return {
         properties: {
             filter: `blur(${amount})`,
-        }
+        },
     }
 }
 
@@ -32,11 +27,7 @@ export const buildFilterByType = (type: FilterType, options: FilterOptions) => {
     }
 }
 
-export const buildFilterLayer = (
-    type: FilterType,
-    options: FilterOptions
-): BuilderLayer => {
-    const {properties} = buildFilterByType(type, options as BlurOptions)
-    return {type: 'filter', properties}
-
+export const buildFilterLayer = (type: FilterType, options: FilterOptions): BuilderLayer => {
+    const { properties } = buildFilterByType(type, options as BlurOptions)
+    return { type: 'filter', properties }
 }

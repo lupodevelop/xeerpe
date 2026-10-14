@@ -4,16 +4,13 @@ import { useEffect, useState } from 'react'
 import classes from './tableOfContent.module.css'
 import { TableOfContentsProps } from '@/src/models/tocItem.ts'
 
-const scrollBehavior = (): ScrollBehavior =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+const scrollBehavior = (): ScrollBehavior => (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth')
 
 const TableOfContents = ({ items }: TableOfContentsProps) => {
     const [activeId, setActiveId] = useState(items[0]?.id ?? '')
 
     useEffect(() => {
-        const headings = items
-            .map(({ id }) => document.getElementById(id))
-            .filter((element): element is HTMLElement => element !== null)
+        const headings = items.map(({ id }) => document.getElementById(id)).filter((element): element is HTMLElement => element !== null)
 
         if (!headings.length) return
 
@@ -21,10 +18,7 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
             (entries) => {
                 const visibleHeadings = entries
                     .filter((entry) => entry.isIntersecting)
-                    .sort(
-                        (a, b) =>
-                            a.boundingClientRect.top - b.boundingClientRect.top
-                    )
+                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
 
                 const currentHeading = visibleHeadings[0]
 
@@ -35,7 +29,7 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
             {
                 rootMargin: '-10% 0px -70% 0px',
                 threshold: 0,
-            }
+            },
         )
 
         headings.forEach((heading) => observer.observe(heading))
@@ -73,18 +67,12 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
         const currentHash = window.location.hash.slice(1)
         if (currentHash === activeId) return
 
-        const url =
-            `${window.location.pathname}` +
-            `${window.location.search}` +
-            `#${activeId}`
+        const url = `${window.location.pathname}` + `${window.location.search}` + `#${activeId}`
 
         window.history.replaceState(null, '', url)
     }, [activeId])
 
-    const handleClick = (
-        event: React.MouseEvent<HTMLAnchorElement>,
-        id: string
-    ) => {
+    const handleClick = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
         event.preventDefault()
 
         const element = document.getElementById(id)
@@ -109,12 +97,8 @@ const TableOfContents = ({ items }: TableOfContentsProps) => {
                             <a
                                 href={`#${item.id}`}
                                 onClick={(event) => handleClick(event, item.id)}
-                                className={
-                                    item.id === activeId ? classes.active : undefined
-                                }
-                                aria-current={
-                                    item.id === activeId ? 'true' : undefined
-                                }
+                                className={item.id === activeId ? classes.active : undefined}
+                                aria-current={item.id === activeId ? 'true' : undefined}
                             >
                                 {item.text}
                             </a>

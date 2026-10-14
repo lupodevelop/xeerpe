@@ -1,10 +1,10 @@
 'use client'
 
-import {KeyboardEvent, useRef, useState} from 'react'
+import { KeyboardEvent, useRef, useState } from 'react'
 import classes from './chainTabs.module.css'
-import {ChainTabsProps} from '@/src/models/home.ts'
+import { ChainTabsProps } from '@/src/models/home.ts'
 
-const ChainTabs = ({tabs}: ChainTabsProps) => {
+const ChainTabs = ({ tabs }: ChainTabsProps) => {
     const [activeId, setActiveId] = useState(tabs[0].id)
     const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
     const activeIndex = tabs.findIndex((tab) => tab.id === activeId)
@@ -25,7 +25,9 @@ const ChainTabs = ({tabs}: ChainTabsProps) => {
                 {tabs.map((tab, index) => (
                     <button
                         key={tab.id}
-                        ref={(element) => { tabRefs.current[tab.id] = element }}
+                        ref={(element) => {
+                            tabRefs.current[tab.id] = element
+                        }}
                         type="button"
                         role="tab"
                         id={`chain-tab-${tab.id}`}

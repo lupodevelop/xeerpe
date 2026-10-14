@@ -1,4 +1,4 @@
-import {PresetCategory} from "xeerpe";
+import { PresetCategory } from 'xeerpe'
 
 export interface PresetGalleryProps {
     category: PresetCategory

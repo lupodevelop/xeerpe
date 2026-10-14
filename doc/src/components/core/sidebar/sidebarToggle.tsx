@@ -1,10 +1,10 @@
 'use client'
 
 import classes from './sidebar.module.css'
-import {useSidebar} from "@/src/context/sidebarContext.tsx";
+import { useSidebar } from '@/src/context/sidebarContext.tsx'
 
 const SidebarToggle = () => {
-    const { open, toggle } = useSidebar();
+    const { open, toggle } = useSidebar()
     return (
         <button
             type="button"
@@ -16,8 +16,7 @@ const SidebarToggle = () => {
         >
             ☰
         </button>
-    );
-
+    )
 }
 
-export default SidebarToggle;
+export default SidebarToggle

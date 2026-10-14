@@ -1,19 +1,26 @@
-import {Metadata, Viewport} from "next";
+import { Metadata, Viewport } from 'next'
 import {
-    SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_LOCALE,
-    AUTHOR_NAME, AUTHOR_URL, INDEXABLE,
-    serializeJsonLd, softwareJsonLd, BACKGROUND_COLOR,
-} from "@/src/config/site.ts";
-import {ChildrenProps} from "@/src/models/layout.ts";
-import Sidebar from "@cmp/core/sidebar/sidebar.tsx";
-import Navbar from "@cmp/core/navbar/navbar.tsx";
-import {SidebarProvider} from "@/src/context/sidebarContext.tsx";
-import {Builder} from "xeerpe"
-import {Roboto} from 'next/font/google'
+    SITE_URL,
+    SITE_NAME,
+    SITE_TITLE,
+    SITE_DESCRIPTION,
+    SITE_LOCALE,
+    AUTHOR_NAME,
+    AUTHOR_URL,
+    INDEXABLE,
+    serializeJsonLd,
+    softwareJsonLd,
+    BACKGROUND_COLOR,
+} from '@/src/config/site.ts'
+import { ChildrenProps } from '@/src/models/layout.ts'
+import Sidebar from '@cmp/core/sidebar/sidebar.tsx'
+import Navbar from '@cmp/core/navbar/navbar.tsx'
+import { SidebarProvider } from '@/src/context/sidebarContext.tsx'
+import { Builder } from 'xeerpe'
+import { Roboto } from 'next/font/google'
 import '../../../lib/src/css/animations.css'
-import "./index.css"
-import "@/src/styles/mdx.css"
-
+import './index.css'
+import '@/src/styles/mdx.css'
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),
@@ -41,16 +48,16 @@ export const metadata: Metadata = {
     },
     robots: INDEXABLE
         ? {
-            index: true,
-            follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                'max-image-preview': 'large',
-                'max-snippet': -1,
-                'max-video-preview': -1,
-            },
-        }
+              index: true,
+              follow: true,
+              googleBot: {
+                  index: true,
+                  follow: true,
+                  'max-image-preview': 'large',
+                  'max-snippet': -1,
+                  'max-video-preview': -1,
+              },
+          }
         : { index: false, follow: false },
 }
 
@@ -63,15 +70,14 @@ const roboto = Roboto({
 
 export const viewport: Viewport = {
     themeColor: BACKGROUND_COLOR,
-    colorScheme: 'dark'
+    colorScheme: 'dark',
 }
 
-const RootLayout = ({children}: ChildrenProps) => {
-
+const RootLayout = ({ children }: ChildrenProps) => {
     const xeerpeBackground = new Builder()
-        .radialGradient({from: 'rgba(0,255,140,0.12)', to: 'transparent', size: 'closest-side'})
-        .linearGradient({from: '#050705', to: '#0a0f0a', angle: '135deg'})
-        .grid({color: '#00b300'})
+        .radialGradient({ from: 'rgba(0,255,140,0.12)', to: 'transparent', size: 'closest-side' })
+        .linearGradient({ from: '#050705', to: '#0a0f0a', angle: '135deg' })
+        .grid({ color: '#00b300' })
         .toStyle()
 
     return (
@@ -84,21 +90,20 @@ const RootLayout = ({children}: ChildrenProps) => {
             }}
             className={roboto.className}
         >
-        <body>
-        <a href="#main-content" className="skip-link">Skip to content</a>
+            <body>
+                <a href="#main-content" className="skip-link">
+                    Skip to content
+                </a>
 
-        <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: serializeJsonLd(softwareJsonLd()) }}
-        />
-        <SidebarProvider>
-            <Navbar/>
-            <Sidebar/>
-            {children}
-        </SidebarProvider>
-        </body>
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(softwareJsonLd()) }} />
+                <SidebarProvider>
+                    <Navbar />
+                    <Sidebar />
+                    {children}
+                </SidebarProvider>
+            </body>
         </html>
-    );
+    )
 }
 
 export default RootLayout

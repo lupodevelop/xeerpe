@@ -1,5 +1,5 @@
-import {ReactNode} from "react";
-import {Builder} from "xeerpe";
+import { ReactNode } from 'react'
+import { Builder } from 'xeerpe'
 
 export interface ChainStep {
     title: string

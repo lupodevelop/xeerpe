@@ -6,18 +6,12 @@ import {
     GrainOptions,
     NoiseOptions,
     VignetteOptions,
-    GlowOptions
-} from "../models/index.ts";
-import {clamp, withAlpha} from "../utils/index.ts";
+    GlowOptions,
+} from '../models/index.ts'
+import { clamp, withAlpha } from '../utils/index.ts'
 
 export const generateNoiseEffect = (options: NoiseOptions): string => {
-
-    const {
-        opacity = .25,
-        scale = 0.65,
-        type = 'fractalNoise',
-        octaves = 16,
-    } = options
+    const { opacity = 0.25, scale = 0.65, type = 'fractalNoise', octaves = 16 } = options
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
                         <filter id="n">
@@ -27,18 +21,12 @@ export const generateNoiseEffect = (options: NoiseOptions): string => {
                         <rect width="100%" height="100%" filter="url(#n)" opacity="${opacity}"/>
                     </svg>`
 
-
-    const encoded = encodeURIComponent(svg);
-    return `url("data:image/svg+xml,${encoded}")`;
-
+    const encoded = encodeURIComponent(svg)
+    return `url("data:image/svg+xml,${encoded}")`
 }
 
 export const generateVignetteEffect = (options: VignetteOptions): string => {
-    const {
-        color = '#000000',
-        intensity = 0.2,
-        spread = 0.2,
-    } = options
+    const { color = '#000000', intensity = 0.2, spread = 0.2 } = options
 
     const vignetteColor = withAlpha(color, clamp(intensity, 0, 1))
     const spreadPercentage = Math.round(spread * 100)
@@ -46,7 +34,7 @@ export const generateVignetteEffect = (options: VignetteOptions): string => {
 }
 
 export const generateGrainEffect = (options: GrainOptions): string => {
-    const {intensity = 1, size = '100%', animated = false} = options
+    const { intensity = 1, size = '100%', animated = false } = options
     const opacity = clamp(intensity * 0.08, 0.01, 0.12)
 
     const filterContent = animated
@@ -63,8 +51,8 @@ export const generateGrainEffect = (options: GrainOptions): string => {
                      <rect width="${size}" height="${size}" filter="url(#g)" opacity="${opacity}"/>
                   </svg>`
 
-    const encoded = encodeURIComponent(svg);
-    return `url("data:image/svg+xml,${encoded}")`;
+    const encoded = encodeURIComponent(svg)
+    return `url("data:image/svg+xml,${encoded}")`
 }
 
 export const generateGlowEffect = (options: GlowOptions): string => {
@@ -89,16 +77,13 @@ export const buildEffectByType = (type: EffectType, options: EffectOptions): str
     }
 }
 
-export const buildEffectLayer = (
-    type: EffectType,
-    options: EffectOptions
-): BuilderLayer => {
+export const buildEffectLayer = (type: EffectType, options: EffectOptions): BuilderLayer => {
     if (type === 'glow') {
         return {
             type: 'effect',
             properties: {
-                boxShadow: buildEffectByType(type, options)
-            } as CSSProperties
+                boxShadow: buildEffectByType(type, options),
+            } as CSSProperties,
         }
     }
 
@@ -106,7 +91,7 @@ export const buildEffectLayer = (
         type: 'effect',
         properties: {
             backgroundImage: buildEffectByType(type, options),
-            backgroundSize: (options as Exclude<EffectOptions, GlowOptions>).backgroundSize ?? 'auto'
-        } as CSSProperties
+            backgroundSize: (options as Exclude<EffectOptions, GlowOptions>).backgroundSize ?? 'auto',
+        } as CSSProperties,
     }
 }
