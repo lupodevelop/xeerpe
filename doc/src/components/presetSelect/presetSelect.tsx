@@ -54,7 +54,7 @@ const PresetSelect = ({id, value, placeholder = 'Start from a preset…', classN
     const active = activeName && matches.some(({name}) => name === activeName) ? activeName : matches[0]?.name
 
     useEffect(() => {
-        if (open) searchRef.current?.focus()
+        if (open) searchRef.current?.focus({preventScroll: true})
     }, [open])
 
     useEffect(() => {
